@@ -6,7 +6,6 @@ namespace TelesignEnterprise.Example.VerifyCompletion
 {
     class ReportCompletionAfterReceivingVoiceCall
     {
-
         public static void Main(string[] args)
         {
             string customerId = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890";
@@ -42,13 +41,11 @@ namespace TelesignEnterprise.Example.VerifyCompletion
                     {
                         Console.WriteLine("Error reporting completion.");
                     }
-
                 }
                 else
                 {
                     Console.WriteLine("Your code is incorrect.");
                 }
-
             }
             catch (Exception e)
             {

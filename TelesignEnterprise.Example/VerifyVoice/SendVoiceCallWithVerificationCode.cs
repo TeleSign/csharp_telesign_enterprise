@@ -33,7 +33,6 @@ namespace TelesignEnterprise.Example.VerifyVoice
                 {
                     Console.WriteLine("Your code is incorrect.");
                 }
-
             }
             catch (Exception e)
             {
