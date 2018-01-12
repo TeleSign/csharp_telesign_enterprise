@@ -28,6 +28,8 @@ To add the TeleSign Enterprise C# SDK to your project, build and install the Tel
     $ nuget pack .\Path\To\csharp_telesign_enterprise\TelesignEnterprise\TelesignEnterprise.csproj
     $ Install-Package .\Path\To\TelesignEnterprise-(insert latest version).nupkg
 
+.NET framework **v4.5.2+** is required for the TeleSign Enterprise C# SDK.
+
 Authentication
 --------------
 
