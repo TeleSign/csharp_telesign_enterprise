@@ -62,7 +62,7 @@ namespace TelesignEnterprise
                 parameters = new Dictionary<string, string>();
             }
 
-            parameters.Add("phone_number", phoneNumber);
+            parameters["phone_number"] = phoneNumber;
 
             return this.Post(VERIFY_SMS_RESOURCE, parameters);
         }
@@ -80,7 +80,7 @@ namespace TelesignEnterprise
                 parameters = new Dictionary<string, string>();
             }
 
-            parameters.Add("phone_number", phoneNumber);
+            parameters["phone_number"] = phoneNumber;
 
             return this.Post(VERIFY_VOICE_RESOURCE, parameters);
         }
@@ -99,8 +99,8 @@ namespace TelesignEnterprise
                 parameters = new Dictionary<string, string>();
             }
 
-            parameters.Add("phone_number", phoneNumber);
-            parameters.Add("ucid", ucid);
+            parameters["phone_number"] = phoneNumber;
+            parameters["ucid"] = ucid;
 
             return this.Post(VERIFY_SMART_RESOURCE, parameters);
         }
@@ -119,8 +119,8 @@ namespace TelesignEnterprise
                 parameters = new Dictionary<string, string>();
             }
 
-            parameters.Add("phone_number", phoneNumber);
-            parameters.Add("ucid", ucid);
+            parameters["phone_number"] = phoneNumber;
+            parameters["ucid"] = ucid;
 
             return this.Post(VERIFY_PUSH_RESOURCE, parameters);
         }

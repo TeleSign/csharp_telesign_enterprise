@@ -16,8 +16,8 @@ namespace TelesignEnterprise.Example.VerifyVoice
             string ttsMessage = "Votre code de vérification Widgets 'n' More est $$CODE$$.";
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("language", language);
-            parameters.Add("tts_message", ttsMessage);
+            parameters["language"] = language;
+            parameters["tts_message"] = ttsMessage;
 
             try
             {

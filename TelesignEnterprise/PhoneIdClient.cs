@@ -77,7 +77,7 @@ namespace TelesignEnterprise
                 parameters = new Dictionary<string, string>();
             }
 
-            parameters.Add("ucid", ucid);
+            parameters["ucid"] = ucid;
 
             return this.Get(string.Format(PHONEID_SCORE_RESOURCE, phoneNumber), parameters);
         }
@@ -95,7 +95,7 @@ namespace TelesignEnterprise
                 parameters = new Dictionary<string, string>();
             }
 
-            parameters.Add("ucid", ucid);
+            parameters["ucid"] = ucid;
 
             return this.Get(string.Format(PHONEID_CONTACT_RESOURCE, phoneNumber), parameters);
         }
@@ -113,7 +113,7 @@ namespace TelesignEnterprise
                 parameters = new Dictionary<string, string>();
             }
 
-            parameters.Add("ucid", ucid);
+            parameters["ucid"] = ucid;
 
             return this.Get(string.Format(PHONEID_LIVE_RESOURCE, phoneNumber), parameters);
         }
@@ -131,7 +131,7 @@ namespace TelesignEnterprise
                 parameters = new Dictionary<string, string>();
             }
 
-            parameters.Add("ucid", ucid);
+            parameters["ucid"] = ucid;
 
             return this.Get(string.Format(PHONEID_NUMBER_DEACTIVATION_RESOURCE, phoneNumber), parameters);
         }

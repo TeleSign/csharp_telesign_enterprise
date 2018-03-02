@@ -58,9 +58,9 @@ namespace TelesignEnterprise
                 parameters = new Dictionary<string, string>();
             }
 
-            parameters.Add("phone_number", phoneNumber);
-            parameters.Add("fraud_type", fraudType);
-            parameters.Add("occurred_at", occurredAt);
+            parameters["phone_number"] = phoneNumber;
+            parameters["fraud_type"] = fraudType;
+            parameters["occurred_at"] = occurredAt;
 
             return this.Post(TELEBUREAU_CREATE_RESOURCE, parameters);
         }
