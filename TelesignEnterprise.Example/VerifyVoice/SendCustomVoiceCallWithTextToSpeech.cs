@@ -16,7 +16,7 @@ namespace TelesignEnterprise.Example.VerifyVoice
             string ttsMessage = string.Format("Hello, your code is {0}. Once again, your code is {1}. Goodbye.", verifyCode, verifyCode);
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("tts_message", ttsMessage);
+            parameters["tts_message"] = ttsMessage;
 
             try
             {

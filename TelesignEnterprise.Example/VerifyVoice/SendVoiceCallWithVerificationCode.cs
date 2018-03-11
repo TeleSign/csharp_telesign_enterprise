@@ -15,7 +15,7 @@ namespace TelesignEnterprise.Example.VerifyVoice
             string verifyCode = "12345";
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("verify_code", verifyCode);
+            parameters["verify_code"] = verifyCode;
 
             try
             {

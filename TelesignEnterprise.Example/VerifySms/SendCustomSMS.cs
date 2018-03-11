@@ -15,7 +15,7 @@ namespace TelesignEnterprise.Example.VerifySms
             string template = "Your Widgets 'n' More verification code is $$CODE$$.";
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("template", template);
+            parameters["template"] = template;
 
             try
             {
