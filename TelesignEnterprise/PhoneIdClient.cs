@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net;
-using Telesign;
+using _PhoneIdClient = Telesign.PhoneIdClient;
 
 namespace TelesignEnterprise
 {
@@ -12,7 +12,7 @@ namespace TelesignEnterprise
     /// delivering real-time decision making throughout the number lifecycle and ensuring only legitimate users are
     /// creating accounts and accessing your applications.
     /// </summary>
-    public class PhoneIdClient : RestClient
+    public class PhoneIdClient : _PhoneIdClient
     {
         private const string PHONEID_STANDARD_RESOURCE = "/v1/phoneid/standard/{0}";
         private const string PHONEID_SCORE_RESOURCE = "/v1/phoneid/score/{0}";
@@ -24,7 +24,7 @@ namespace TelesignEnterprise
                              string apiKey)
             : base(customerId,
                    apiKey,
-                   restEndpoint: "https://rest-ww.telesign.com")
+                   "https://rest-ww.telesign.com")
         { }
 
         public PhoneIdClient(string customerId,
@@ -44,7 +44,7 @@ namespace TelesignEnterprise
                              string proxyPassword)
             : base(customerId,
                    apiKey,
-                   restEndpoint: restEndpoint,
+                   restEndpoint,
                    timeout: timeout,
                    proxy: proxy,
                    proxyUsername: proxyUsername,
