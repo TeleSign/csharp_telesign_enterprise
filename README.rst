@@ -1,5 +1,5 @@
 ﻿.. image:: https://raw.github.com/TeleSign/csharp_telesign/master/csharp_banner_enterprise.jpg
-    :target: https://developer.telesign.com
+    :target: https://enterprise.telesign.com
 
 ==========================
 TeleSign Enterprise C# SDK
@@ -16,7 +16,7 @@ Documentation
 -------------
 
 Code documentation is included in the SDK. Complete documentation, quick start guides and reference material
-for the TeleSign API is available within the `TeleSign Developer Center <https://developer.telesign.com/>`_.
+for the TeleSign API is available within the `TeleSign Enterprise Documentation <https://enterprise.telesign.com/>`_.
 
 Installation
 ------------
@@ -74,4 +74,4 @@ Here is a basic code example with JSON response.
 
 For more examples, see the
 `examples <https://github.com/TeleSign/csharp_telesign_enterprise/tree/master/TelesignEnterprise.Example>`_ project or visit
-the `TeleSign Developer Portal <https://developer.telesign.com/>`_.
+the `TeleSign Enterprise Documentation <https://enterprise.telesign.com/>`_.
