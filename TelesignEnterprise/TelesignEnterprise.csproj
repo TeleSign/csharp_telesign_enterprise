@@ -40,7 +40,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="Telesign, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Telesign.2.2.1\lib\net452\Telesign.dll</HintPath>
-      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
