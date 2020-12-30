@@ -2,13 +2,13 @@
 <package>
     <metadata>
     <id>TelesignEnterprise</id>
-    <version>2.2.1</version>
+    <version>2.2.2</version>
     <title>TelesignEnterprise</title>
     <authors>Telesign</authors>
     <owners>Telesign</owners>
     <licenseUrl>https://github.com/TeleSign/csharp_telesign_enterprise/blob/master/LICENSE.txt</licenseUrl>
     <projectUrl>https://github.com/TeleSign/csharp_telesign_enterprise</projectUrl>
-    <iconUrl>https://raw.github.com/TeleSign/csharp_telesign/master/nuget_icon.jpg</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/TeleSign/csharp_telesign/master/nuget_icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>The TeleSign C# SDK lets you easily integrate with our REST API.</description>
     <releaseNotes><![CDATA[
