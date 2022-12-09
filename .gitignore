@@ -288,5 +288,8 @@ __pycache__/
 *.odx.cs
 *.xsd.cs
 
+# Visual Studio Code IDE
+.vscode/
+
 Other
 .DS_Store
