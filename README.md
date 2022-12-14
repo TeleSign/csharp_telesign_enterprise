@@ -33,16 +33,12 @@ Follow these steps to add this SDK as a dependency to your project.
 
     `dotnet new console -o SendSMS`
 
-3. Install the Telesign Full-service C# SDK using the dotnet CLI. This will also install the Telesign Self-service C# SDK since it is a dependency for the Full-service SDK. Once the SDK is installed, you should see a message in the terminal notifying you that you have successfully installed the SDK.
+3. Install the Telesign Full-service C# SDK using the dotnet CLI. This will also install the Telesign Self-service C# SDK since it is a dependency for the Full-service SDK. 
 
    `dotnet add package TelesignEnterprise --version 2.2.3`
 
-4.	Reference the SDKs in the .cs file for your project using these statements:
+   Once the SDK is installed, you should see a message in the terminal notifying you that you have successfully installed the SDK.
 
-```
-    using Telesign;
-    using TelesignEnterprise;
-```
 
 > **NOTE:**
 > 
