@@ -145,5 +145,67 @@ namespace TelesignEnterprise
         {
             return this.Put(string.Format(VERIFY_COMPLETION_RESOURCE, referenceId), parameters);
         }
+        public TelesignResponse CreateVerificationProcess(string phoneNumber, Dictionary<string, object> parameters = null)
+        {
+            OmniVerifyClient verifyClientNew = new OmniVerifyClient(this.customerId, this.apiKey);
+            return verifyClientNew.CreateVerificationProcess(phoneNumber, parameters);
+        }
+    }
+
+    internal class OmniVerifyClient : RestClient
+    {
+        private const string VERIFY_OMNICHANNEL_RESOURCE = "/verification";
+        public OmniVerifyClient(string customerId,
+                            string apiKey)
+                : base(customerId,
+                       apiKey,
+                       restEndpoint: "https://verify.telesign.com")
+        { }
+
+        public OmniVerifyClient(string customerId,
+                             string apiKey,
+                             string restEndpoint)
+            : base(customerId,
+                   apiKey,
+                   restEndpoint)
+        { }
+
+        public OmniVerifyClient(string customerId,
+                             string apiKey,
+                             string restEndpoint,
+                             int timeout,
+                             WebProxy proxy,
+                             string proxyUsername,
+                             string proxyPassword)
+            : base(customerId,
+                   apiKey,
+                   restEndpoint: restEndpoint,
+                   timeout: timeout,
+                   proxy: proxy,
+                   proxyUsername: proxyUsername,
+                   proxyPassword: proxyPassword)
+        { }
+        public TelesignResponse CreateVerificationProcess(string phoneNumber, Dictionary<string, object> parameters = null)
+        {
+            if (parameters == null)
+                parameters = new Dictionary<string, object>();
+
+            parameters.Add("recipient", new Dictionary<string, string>
+            {
+                { "phone_number", phoneNumber }
+            });
+
+            if (!parameters.ContainsKey("verification_policy"))
+                parameters.Add("verification_policy", new List<Dictionary<string, object>>()
+                {
+                    new Dictionary<string, object>
+                    {
+                        { "method", "sms" },
+                        { "fallback_time", 30 }
+                    }
+                });
+            return this.Post(VERIFY_OMNICHANNEL_RESOURCE, parameters);
+        }
+
     }
 }
