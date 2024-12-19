@@ -11,10 +11,10 @@ namespace TelesignEnterprise.Example.MessagingOmnichannel
     {
         static void Main(string[] args)
         {
-            string customerId = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890";
-            string apiKey = "EXAMPLETE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw==";
+            string customerId = Environment.GetEnvironmentVariable("CUSTOMER_ID");
+            string apiKey = Environment.GetEnvironmentVariable("API_KEY");
 
-            string phoneNumber = "phone_number";
+            string phoneNumber = Environment.GetEnvironmentVariable("PHONE_NUMBER");
             string message = "You're scheduled for a dentist appointment at 2:30PM.";
 
             Dictionary<string, object> parameters = new Dictionary<string, object>()
