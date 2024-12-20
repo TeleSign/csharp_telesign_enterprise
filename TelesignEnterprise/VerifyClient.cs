@@ -14,7 +14,6 @@ namespace TelesignEnterprise
         private const string VERIFY_SMS_RESOURCE = "/v1/verify/sms";
         private const string VERIFY_VOICE_RESOURCE = "/v1/verify/call";
         private const string VERIFY_SMART_RESOURCE = "/v1/verify/smart";
-        private const string VERIFY_PUSH_RESOURCE = "/v2/verify/push";
         private const string VERIFY_STATUS_RESOURCE = "/v1/verify/{0}";
         private const string VERIFY_COMPLETION_RESOURCE = "/v1/verify/completion/{0}";
 
@@ -103,26 +102,6 @@ namespace TelesignEnterprise
             parameters.Add("ucid", ucid);
 
             return this.Post(VERIFY_SMART_RESOURCE, parameters);
-        }
-
-        /// <summary>
-        /// The Push Verify web service allows you to provide on-device transaction authorization for your end users. It
-        /// works by delivering authorization requests to your end users via push notification, and then by receiving their
-        /// permission responses via their mobile device's wireless Internet connection.
-        /// 
-        /// See https://developer.telesign.com/docs/rest_api-verify-push for detailed API documentation.
-        /// </summary>
-        public TelesignResponse Push(string phoneNumber, string ucid, Dictionary<string, string> parameters = null)
-        {
-            if (parameters == null)
-            {
-                parameters = new Dictionary<string, string>();
-            }
-
-            parameters.Add("phone_number", phoneNumber);
-            parameters.Add("ucid", ucid);
-
-            return this.Post(VERIFY_PUSH_RESOURCE, parameters);
         }
 
         /// <summary>
