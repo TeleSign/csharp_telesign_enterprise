@@ -14,7 +14,6 @@ namespace TelesignEnterprise
         private const string VERIFY_SMS_RESOURCE = "/v1/verify/sms";
         private const string VERIFY_VOICE_RESOURCE = "/v1/verify/call";
         private const string VERIFY_SMART_RESOURCE = "/v1/verify/smart";
-        private const string VERIFY_PUSH_RESOURCE = "/v2/verify/push";
         private const string VERIFY_STATUS_RESOURCE = "/v1/verify/{0}";
         private const string VERIFY_COMPLETION_RESOURCE = "/v1/verify/completion/{0}";
 
@@ -106,26 +105,6 @@ namespace TelesignEnterprise
         }
 
         /// <summary>
-        /// The Push Verify web service allows you to provide on-device transaction authorization for your end users. It
-        /// works by delivering authorization requests to your end users via push notification, and then by receiving their
-        /// permission responses via their mobile device's wireless Internet connection.
-        /// 
-        /// See https://developer.telesign.com/docs/rest_api-verify-push for detailed API documentation.
-        /// </summary>
-        public TelesignResponse Push(string phoneNumber, string ucid, Dictionary<string, string> parameters = null)
-        {
-            if (parameters == null)
-            {
-                parameters = new Dictionary<string, string>();
-            }
-
-            parameters.Add("phone_number", phoneNumber);
-            parameters.Add("ucid", ucid);
-
-            return this.Post(VERIFY_PUSH_RESOURCE, parameters);
-        }
-
-        /// <summary>
         /// Retrieves the verification result for any verify resource.
         /// 
         /// See https://developer.telesign.com/docs/rest_api-verify-transaction-callback for detailed API documentation.
@@ -145,5 +124,67 @@ namespace TelesignEnterprise
         {
             return this.Put(string.Format(VERIFY_COMPLETION_RESOURCE, referenceId), parameters);
         }
+        public TelesignResponse CreateVerificationProcess(string phoneNumber, Dictionary<string, object> parameters = null)
+        {
+            OmniVerifyClient verifyClientNew = new OmniVerifyClient(this.customerId, this.apiKey);
+            return verifyClientNew.CreateVerificationProcess(phoneNumber, parameters);
+        }
+    }
+
+    internal class OmniVerifyClient : RestClient
+    {
+        private const string VERIFY_OMNICHANNEL_RESOURCE = "/verification";
+        public OmniVerifyClient(string customerId,
+                            string apiKey)
+                : base(customerId,
+                       apiKey,
+                       restEndpoint: "https://verify.telesign.com")
+        { }
+
+        public OmniVerifyClient(string customerId,
+                             string apiKey,
+                             string restEndpoint)
+            : base(customerId,
+                   apiKey,
+                   restEndpoint)
+        { }
+
+        public OmniVerifyClient(string customerId,
+                             string apiKey,
+                             string restEndpoint,
+                             int timeout,
+                             WebProxy proxy,
+                             string proxyUsername,
+                             string proxyPassword)
+            : base(customerId,
+                   apiKey,
+                   restEndpoint: restEndpoint,
+                   timeout: timeout,
+                   proxy: proxy,
+                   proxyUsername: proxyUsername,
+                   proxyPassword: proxyPassword)
+        { }
+        public TelesignResponse CreateVerificationProcess(string phoneNumber, Dictionary<string, object> parameters = null)
+        {
+            if (parameters == null)
+                parameters = new Dictionary<string, object>();
+
+            parameters.Add("recipient", new Dictionary<string, string>
+            {
+                { "phone_number", phoneNumber }
+            });
+
+            if (!parameters.ContainsKey("verification_policy"))
+                parameters.Add("verification_policy", new List<Dictionary<string, object>>()
+                {
+                    new Dictionary<string, object>
+                    {
+                        { "method", "sms" },
+                        { "fallback_time", 30 }
+                    }
+                });
+            return this.Post(VERIFY_OMNICHANNEL_RESOURCE, parameters);
+        }
+
     }
 }
