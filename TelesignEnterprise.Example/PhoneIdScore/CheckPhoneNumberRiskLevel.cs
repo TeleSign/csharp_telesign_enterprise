@@ -7,10 +7,10 @@ namespace TelesignEnterprise.Example.PhoneIdScore
     {
         public static void Main(string[] args)
         {
-            string customerId = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890";
-            string apiKey = "EXAMPLETE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw==";
+            string customerId = Environment.GetEnvironmentVariable("CUSTOMER_ID");
+            string apiKey = Environment.GetEnvironmentVariable("API_KEY");
 
-            string phoneNumber = "phone_number";
+            string phoneNumber = Environment.GetEnvironmentVariable("PHONE_NUMBER");
             string ucid = "BACF";
 
             try
