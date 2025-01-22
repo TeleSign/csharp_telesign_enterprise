@@ -1,4 +1,4 @@
-2.2.0
+2.3.0
 - Added new method to send requests to Telesign Messaging.
 - Added new method to send requests to the Telesign Verify API.
 - Added new new examples for requests to Telesign Omnichannel Messaging.
