@@ -1,4 +1,11 @@
 2.2.0
+- Added new method to send requests to Telesign Messaging.
+- Added new method to send requests to the Telesign Verify API.
+- Added new new examples for requests to Telesign Omnichannel Messaging.
+- Added new examples for requests to the Telesign Verify API.
+- Removed push method in VerifyClient class.
+
+2.2.0
  - AutoVerify rebranded to AppVerify, please update your integration
 
 2.1.0
