@@ -6,7 +6,7 @@ namespace TelesignEnterprise
 {
     /// <summary>
     /// The Verify API delivers phone-based verification and two-factor authentication using a time-based, one-time passcode
-    /// sent via SMS message, Voice call or Push Notification.
+    /// sent via SMS message or Voice call Notification.
     /// </summary>
     public class VerifyClient : RestClient
     {
