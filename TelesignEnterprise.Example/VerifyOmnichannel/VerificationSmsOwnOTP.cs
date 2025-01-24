@@ -1,12 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Telesign;
 
-namespace TelesignEnterprise.Example.VerifyCompletion
+namespace TelesignEnterprise.Example.VerifyOmnichannel
 {
-    public class ReportCompletionAfterReceivingSMS
+    class VerificationSmsOwnOTP
     {
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
             string customerId = Environment.GetEnvironmentVariable("CUSTOMER_ID");
             string apiKey = Environment.GetEnvironmentVariable("API_KEY");
@@ -14,15 +14,13 @@ namespace TelesignEnterprise.Example.VerifyCompletion
             string phoneNumber = Environment.GetEnvironmentVariable("PHONE_NUMBER");
             string verifyCode = "12345";
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("verify_code", verifyCode);
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("security_factor", verifyCode);
 
             try
             {
                 VerifyClient verifyClient = new VerifyClient(customerId, apiKey);
-                RestClient.TelesignResponse telesignResponse = verifyClient.Sms(phoneNumber, parameters);
-
-                string referenceId = telesignResponse.Json["reference_id"].ToString();
+                RestClient.TelesignResponse telesignResponse = verifyClient.CreateVerificationProcess(phoneNumber, parameters);
 
                 Console.WriteLine("Please enter your verification code:");
                 string code = Console.ReadLine().Trim();
@@ -30,22 +28,12 @@ namespace TelesignEnterprise.Example.VerifyCompletion
                 if (verifyCode == code)
                 {
                     Console.WriteLine("Your code is correct.");
-
-                    telesignResponse = verifyClient.Completion(referenceId);
-
-                    if (telesignResponse.OK && telesignResponse.Json["status"]["code"].ToString() == "1900")
-                    {
-                        Console.WriteLine("Completion successfully reported.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Error reporting completion.");
-                    }
                 }
                 else
                 {
                     Console.WriteLine("Your code is incorrect.");
                 }
+
             }
             catch (Exception e)
             {

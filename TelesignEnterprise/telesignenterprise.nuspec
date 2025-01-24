@@ -2,13 +2,14 @@
 <package>
     <metadata>
     <id>TelesignEnterprise</id>
-    <version>2.2.2</version>
+    <version>2.3.0</version>
     <title>TelesignEnterprise</title>
     <authors>Telesign</authors>
     <owners>Telesign</owners>
-    <licenseUrl>https://github.com/TeleSign/csharp_telesign_enterprise/blob/master/LICENSE.txt</licenseUrl>
+    <license type="file">LICENSE.txt</license>
     <projectUrl>https://github.com/TeleSign/csharp_telesign_enterprise</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/TeleSign/csharp_telesign/master/nuget_icon.png</iconUrl>
+    <icon>nuget_icon.png</icon>
+    <readme>README.md</readme>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>The TeleSign C# SDK lets you easily integrate with our REST API.</description>
     <releaseNotes><![CDATA[
@@ -17,4 +18,9 @@
     <copyright>Copyright © 2017</copyright>
     <tags>telesign sms voice mobile authentication identity messaging</tags>
     </metadata>
+    <files>
+    <file src="..\LICENSE.txt" target="" />
+    <file src="..\nuget_icon.png" target="" />
+    <file src="..\README.md" target="" />
+  </files>
 </package>
