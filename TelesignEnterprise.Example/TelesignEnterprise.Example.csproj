@@ -1,87 +1,18 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A4C72CDA-6A81-4F88-9DF9-A633ABA09562}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TelesignEnterprise.Example</RootNamespace>
-    <AssemblyName>TelesignEnterprise.Example</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile />
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>TelesignEnterprise.Example.PhoneIdScore.CheckPhoneNumberRiskLevel</StartupObject>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telesign.2.2.3\lib\net48\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Telesign, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telesign.2.2.3\lib\net48\Telesign.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
+    <PackageReference Include="Telesign" Version="2.4.0" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="PhoneNumberDeactivation\CheckPhoneNumberDeactivated.cs" />
-    <Compile Include="PhoneIdScore\CheckPhoneNumberRiskLevel.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VerifyCompletion\ReportCompletionAfterReceivingSMS.cs" />
-    <Compile Include="VerifyCompletion\ReportCompletionAfterReceivingVoiceCall.cs" />
-    <Compile Include="VerifySms\SendCustomSMS.cs" />
-    <Compile Include="VerifySms\SendCustomSMSInDifferentLanguage.cs" />
-    <Compile Include="VerifyVoice\SendCustomVoiceCallInDifferentLanguage.cs" />
-    <Compile Include="VerifyVoice\SendCustomVoiceCallWithTextToSpeech.cs" />
-    <Compile Include="VerifySms\SendSMSWithVerificationCode.cs" />
-    <Compile Include="VerifyVoice\SendVoiceCallWithVerificationCode.cs" />
+    <ProjectReference Include="../TelesignEnterprise/TelesignEnterprise.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TelesignEnterprise\TelesignEnterprise.csproj">
-      <Project>{57ac6f58-e6ed-44d4-8f62-78a5ec6dfa1e}</Project>
-      <Name>TelesignEnterprise</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

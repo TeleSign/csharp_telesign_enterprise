@@ -2,9 +2,12 @@
 
 [Telesign](https://telesign.com) connects, protects, and defends the customer experience with intelligence from billions of digital interactions and mobile signals. Through developer-friendly APIs that deliver user verification, digital identity, and omnichannel communications, we help the world's largest brands secure onboarding, maintain account integrity, prevent fraud, and streamline omnichannel engagement.
 
+## Supported .NET versions
+* .NET Framework 4.8+ 
+* .NET Core 6, 7, 8, and 9
+
 ## Requirements
 
-* **.NET Framework v4.5.2+**.
 * **dotnet CLI** *(optional)* - This tool isn't required to use this SDK, but it is required to use the installation instructions below.  
 
 > **NOTE:**

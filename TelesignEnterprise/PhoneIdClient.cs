@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Net;
 using _PhoneIdClient = Telesign.PhoneIdClient;
 
