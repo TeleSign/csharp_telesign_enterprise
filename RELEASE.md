@@ -1,3 +1,7 @@
+2.4.0
+- Added supported versions of .NET Core 6, 7, 8, and 9
+- Updated syntax code to support .NET framework and .Net core
+
 2.3.0
 - Added new method to send requests to Telesign Messaging.
 - Added new method to send requests to the Telesign Verify API.
