@@ -23,8 +23,8 @@ while(!validOption);
 
 
 string customerId = Environment.GetEnvironmentVariable("CUSTOMER_ID")?? "FFFFFFFF-EEEE-DDDD-1234-AB1234567890";
-string apiKey = Environment.GetEnvironmentVariable("API_KEY") ?? "Example/idksdjKJD+==";
-string phoneNumber = Environment.GetEnvironmentVariable("PHONE_NUMBER") ?? "123456789";
+string apiKey = Environment.GetEnvironmentVariable("API_KEY") ?? "ABC12345yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw==";
+string phoneNumber = Environment.GetEnvironmentVariable("PHONE_NUMBER") ?? "11234567890";
 
 switch (options)
 {
