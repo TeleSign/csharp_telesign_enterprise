@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Net;
 using Telesign;
 
@@ -185,6 +185,5 @@ namespace TelesignEnterprise
                 });
             return this.Post(VERIFY_OMNICHANNEL_RESOURCE, parameters);
         }
-
     }
 }
