@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Reflection;
 using System.Threading.Tasks;
 using _MessagingClient = Telesign.MessagingClient;
 
@@ -12,15 +14,23 @@ namespace TelesignEnterprise
             string apiKey)
             : base(customerId,
                 apiKey,
-                "https://rest-ww.telesign.com")
-        { }
+                "https://rest-ww.telesign.com",
+                "csharp_telesign_enterprise",
+                Assembly.GetAssembly(typeof(MessagingClient)).GetName().Version.ToString(),
+                Assembly.GetAssembly(typeof(_MessagingClient)).GetName().Version.ToString())
+        {
+            Console.WriteLine(Assembly.GetCallingAssembly().GetName().Version.ToString());
+        }
 
         public MessagingClient(string customerId,
             string apiKey,
             string restEndpoint)
             : base(customerId,
                 apiKey,
-                restEndpoint)
+                restEndpoint,
+                "csharp_telesign_enterprise",
+                Assembly.GetAssembly(typeof(MessagingClient)).GetName().Version.ToString(),
+                Assembly.GetAssembly(typeof(_MessagingClient)).GetName().Version.ToString())
         { }
 
         public MessagingClient(string customerId,
@@ -36,8 +46,11 @@ namespace TelesignEnterprise
                 timeout: timeout,
                 proxy: proxy,
                 proxyUsername: proxyUsername,
-                proxyPassword: proxyPassword)
-        { }        
+                proxyPassword: proxyPassword,
+                "csharp_telesign_enterprise",
+                Assembly.GetAssembly(typeof(MessagingClient)).GetName().Version.ToString(),
+                Assembly.GetAssembly(typeof(_MessagingClient)).GetName().Version.ToString())
+        { }
         /// <summary>
         /// Send a message to the target recipient using any of Telesign's supported channels.
         /// 

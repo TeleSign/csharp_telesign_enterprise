@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Net;
+using System.Reflection;
 using Telesign;
 
 namespace TelesignEnterprise
@@ -19,7 +20,10 @@ namespace TelesignEnterprise
                                  string apiKey)
             : base(customerId,
                    apiKey,
-                   restEndpoint: "https://rest-ww.telesign.com")
+                   restEndpoint: "https://rest-ww.telesign.com",
+                   source: "csharp_telesign_enterprise",
+                   sdkVersionOrigin: Assembly.GetAssembly(typeof(TelebureauClient)).GetName().Version.ToString(),
+                   sdkVersionDependency: Assembly.GetAssembly(typeof(RestClient)).GetName().Version.ToString())
         { }
 
         public TelebureauClient(string customerId,
@@ -27,7 +31,10 @@ namespace TelesignEnterprise
                              string restEndpoint)
             : base(customerId,
                    apiKey,
-                   restEndpoint)
+                   restEndpoint,
+                   source: "csharp_telesign_enterprise",
+                   sdkVersionOrigin: Assembly.GetAssembly(typeof(TelebureauClient)).GetName().Version.ToString(),
+                   sdkVersionDependency: Assembly.GetAssembly(typeof(RestClient)).GetName().Version.ToString())
         { }
 
         public TelebureauClient(string customerId,
@@ -43,7 +50,10 @@ namespace TelesignEnterprise
                    timeout: timeout,
                    proxy: proxy,
                    proxyUsername: proxyUsername,
-                   proxyPassword: proxyPassword)
+                   proxyPassword: proxyPassword,
+                   source: "csharp_telesign_enterprise",
+                   sdkVersionOrigin: Assembly.GetAssembly(typeof(TelebureauClient)).GetName().Version.ToString(),
+                   sdkVersionDependency: Assembly.GetAssembly(typeof(RestClient)).GetName().Version.ToString())
         { }
 
         /// <summary>

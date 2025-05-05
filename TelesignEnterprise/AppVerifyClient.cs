@@ -1,4 +1,5 @@
 using System.Net;
+using System.Reflection;
 using _AppVerifyClient = Telesign.AppVerifyClient;
 
 namespace TelesignEnterprise
@@ -9,7 +10,10 @@ namespace TelesignEnterprise
             string apiKey)
             : base(customerId,
                 apiKey,
-                "https://rest-ww.telesign.com")
+                "https://rest-ww.telesign.com",
+                "csharp_telesign_enterprise",
+                Assembly.GetCallingAssembly().GetName().Version.ToString(),
+                Assembly.GetAssembly(typeof(_AppVerifyClient)).GetName().Version.ToString())
         { }
 
         public AppVerifyClient(string customerId,
@@ -17,7 +21,10 @@ namespace TelesignEnterprise
             string restEndpoint)
             : base(customerId,
                 apiKey,
-                restEndpoint)
+                restEndpoint,
+                "csharp_telesign_enterprise",
+                Assembly.GetAssembly(typeof(AppVerifyClient)).GetName().Version.ToString(),
+                Assembly.GetAssembly(typeof(_AppVerifyClient)).GetName().Version.ToString())
         { }
 
         public AppVerifyClient(string customerId,
@@ -33,7 +40,10 @@ namespace TelesignEnterprise
                 timeout: timeout,
                 proxy: proxy,
                 proxyUsername: proxyUsername,
-                proxyPassword: proxyPassword)
+                proxyPassword: proxyPassword,
+                "csharp_telesign_enterprise",
+                Assembly.GetAssembly(typeof(AppVerifyClient)).GetName().Version.ToString(),
+                Assembly.GetAssembly(typeof(_AppVerifyClient)).GetName().Version.ToString())
         { }
     }
 }
