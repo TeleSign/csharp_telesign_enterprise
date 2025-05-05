@@ -12,7 +12,7 @@ namespace TelesignEnterprise
                 apiKey,
                 "https://rest-ww.telesign.com",
                 "csharp_telesign_enterprise",
-                Assembly.GetCallingAssembly().GetName().Version.ToString(),
+                Assembly.GetAssembly(typeof(AppVerifyClient)).GetName().Version.ToString(),
                 Assembly.GetAssembly(typeof(_AppVerifyClient)).GetName().Version.ToString())
         { }
 
