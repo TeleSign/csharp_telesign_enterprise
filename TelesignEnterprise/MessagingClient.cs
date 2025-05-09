@@ -18,9 +18,7 @@ namespace TelesignEnterprise
                 "csharp_telesign_enterprise",
                 Assembly.GetAssembly(typeof(MessagingClient)).GetName().Version.ToString(),
                 Assembly.GetAssembly(typeof(_MessagingClient)).GetName().Version.ToString())
-        {
-            Console.WriteLine(Assembly.GetCallingAssembly().GetName().Version.ToString());
-        }
+        { }
 
         public MessagingClient(string customerId,
             string apiKey,
