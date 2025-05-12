@@ -1,5 +1,6 @@
 2.5.0
 - Added tracking to requests
+- Updated RELEASE file step to install the SDK Full-Service
 
 2.4.0
 - Added supported versions of .NET Core 6, 7, 8, and 9
