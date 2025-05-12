@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Net;
+using System.Reflection;
 using _PhoneIdClient = Telesign.PhoneIdClient;
 
 namespace TelesignEnterprise
@@ -24,7 +25,10 @@ namespace TelesignEnterprise
                              string apiKey)
             : base(customerId,
                    apiKey,
-                   "https://rest-ww.telesign.com")
+                   "https://rest-ww.telesign.com",
+                "csharp_telesign_enterprise",
+                Assembly.GetAssembly(typeof(PhoneIdClient)).GetName().Version.ToString(),
+                Assembly.GetAssembly(typeof(_PhoneIdClient)).GetName().Version.ToString())
         { }
 
         public PhoneIdClient(string customerId,
@@ -32,7 +36,10 @@ namespace TelesignEnterprise
                              string restEndpoint)
             : base(customerId,
                    apiKey,
-                   restEndpoint)
+                   restEndpoint,
+                "csharp_telesign_enterprise",
+                Assembly.GetAssembly(typeof(PhoneIdClient)).GetName().Version.ToString(),
+                Assembly.GetAssembly(typeof(_PhoneIdClient)).GetName().Version.ToString())
         { }
 
         public PhoneIdClient(string customerId,
@@ -48,7 +55,10 @@ namespace TelesignEnterprise
                    timeout: timeout,
                    proxy: proxy,
                    proxyUsername: proxyUsername,
-                   proxyPassword: proxyPassword)
+                   proxyPassword: proxyPassword,
+                "csharp_telesign_enterprise",
+                Assembly.GetAssembly(typeof(PhoneIdClient)).GetName().Version.ToString(),
+                Assembly.GetAssembly(typeof(_PhoneIdClient)).GetName().Version.ToString())
         { }
 
         /// <summary>

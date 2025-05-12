@@ -38,7 +38,7 @@ Follow these steps to add this SDK as a dependency to your project.
 
 3. Install the Telesign Full-service C# SDK using the dotnet CLI. This will also install the Telesign Self-service C# SDK since it is a dependency for the Full-service SDK. 
 
-   `dotnet add package TelesignEnterprise --version 2.2.3`
+   `dotnet add package TelesignEnterprise`
 
    Once the SDK is installed, you should see a message in the terminal notifying you that you have successfully installed the SDK.
 
