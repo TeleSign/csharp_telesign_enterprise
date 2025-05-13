@@ -35,7 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Telesign" Version="2.5.1" />
+    <PackageReference Include="Telesign" Version="2.5.0" />
   </ItemGroup>
 
 </Project>
