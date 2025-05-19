@@ -23,9 +23,9 @@ do
 while(!validOption);
 
 
-string customerId = Environment.GetEnvironmentVariable("CUSTOMER_ID")?? "F797DF2A-DE2D-452D-971A-A62AAD2EEF52";
-string apiKey = Environment.GetEnvironmentVariable("API_KEY") ?? "Y8MY8YQBPDy/S41+Id+/xPvubb79UiQHXDp6DMlfsxdwcixjH1RP4DP3DNHuoAuJ0ljvWWOMU/omUv46h9tDCA==";
-string phoneNumber = Environment.GetEnvironmentVariable("PHONE_NUMBER") ?? "918105955669";
+string customerId = Environment.GetEnvironmentVariable("CUSTOMER_ID")?? "FFFFFFFF-EEEE-DDDD-1234-AB1234567890";
+string apiKey = Environment.GetEnvironmentVariable("API_KEY") ?? "ABC12345yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw==";
+string phoneNumber = Environment.GetEnvironmentVariable("PHONE_NUMBER") ?? "11234567890";
 
 switch (options)
 {
