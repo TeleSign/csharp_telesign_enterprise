@@ -51,7 +51,7 @@ public class VerifyExample(string apiKey, string customerId, string phoneNumber)
                 }
             }
             else {
-                Console.WriteLine("Code validation ommited");
+                Console.WriteLine("Code validation omited");
             }
         }
         catch (Exception e)
@@ -104,7 +104,7 @@ public class VerifyExample(string apiKey, string customerId, string phoneNumber)
             }
             else
             {
-                Console.WriteLine("Code validation ommited");
+                Console.WriteLine("Code validation omited");
             }
         }
         catch (Exception e)
@@ -186,7 +186,7 @@ public class VerifyExample(string apiKey, string customerId, string phoneNumber)
             }
             else
             {
-                Console.WriteLine("Code validation ommited");
+                Console.WriteLine("Code validation omited");
             }
         }
         catch (Exception e)
@@ -271,7 +271,7 @@ public class VerifyExample(string apiKey, string customerId, string phoneNumber)
             }
             else
             {
-                Console.WriteLine("Code validation ommited");
+                Console.WriteLine("Code validation omited");
             }
         }
         catch (Exception e)
