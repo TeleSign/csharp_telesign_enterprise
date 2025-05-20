@@ -1,6 +1,6 @@
 2.6.0
 - Added C# SDK method for Retrieve a Verification Process action
-- Added the TelesignEnterprise.Test folder for adding the unit and integrated testcases
+- Added the TelesignEnterprise.Test folder for adding the unit and integrated test cases
 
 2.5.0
 - Added tracking to requests
