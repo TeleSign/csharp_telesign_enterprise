@@ -15,8 +15,8 @@ namespace TelesignEnterprise.Tests.Unit
     [Category("Unit")] 
     public class OmniVerifyClientTests
     {
-        private const string TestCustomerId = "test_customer_id";
-        private const string TestApiKey = "dGVzdF9hcGlfa2V5"; //API key to a base64 string
+        private const string TestCustomerId = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890";
+        private const string TestApiKey = "ABC12345yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="; //API key to a base64 string
         private const string TestVerificationId = "123456";
         private const string BaseUrl = "https://verify.telesign.com";
         private MockHttpMessageHandler _mockHttp;

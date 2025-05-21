@@ -11,8 +11,8 @@ namespace TelesignEnterprise.Tests.Integration
     [Category("Integration")] 
     public class OmniVerifyClientIntegrationTests
     {
-        private const string RealCustomerId = "F797DF2A-DE2D-452D-971A-A62AAD2EEF52";
-        private const string RealApiKey = "Y8MY8YQBPDy/S41+Id+/xPvubb79UiQHXDp6DMlfsxdwcixjH1RP4DP3DNHuoAuJ0ljvWWOMU/omUv46h9tDCA==";
+        private const string RealCustomerId = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890";
+        private const string RealApiKey = "ABC12345yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw==";
 
         private OmniVerifyClient _client;
 
@@ -28,7 +28,7 @@ namespace TelesignEnterprise.Tests.Integration
         {
             var bodyParams = new Dictionary<string, object>
             {
-                { "recipient", new Dictionary<string, string> { { "phone_number", "+918105955669" } } },
+                { "recipient", new Dictionary<string, string> { { "phone_number", "+11234567890" } } },
                 { "verification_policy", new List<object>
                     {
                         new Dictionary<string, object>
@@ -60,7 +60,7 @@ namespace TelesignEnterprise.Tests.Integration
         {
             var bodyParams = new Dictionary<string, object>
             {
-                { "recipient", new Dictionary<string, string> { { "phone_number", "+11234567890" } } },
+                { "recipient", new Dictionary<string, string> { { "phone_number", "+11234567891" } } },
                 { "verification_policy", new List<object>
                     {
                         new Dictionary<string, object>
