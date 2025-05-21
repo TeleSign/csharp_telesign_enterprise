@@ -1,95 +1,114 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Reflection;
 using System.Threading.Tasks;
-using Moq;
+using Newtonsoft.Json.Linq;
+using NUnit.Framework;
+using RichardSzalay.MockHttp;
 using TelesignEnterprise;
-using Xunit;
-using Telesign;
 
-public class OmniVerifyClientTests
+namespace TelesignEnterprise.Tests.Unit
 {
-    private const string TestCustomerId = "test_customer_id";
-    private const string TestApiKey = "test_api_key";
-    private const string TestVerificationId = "123456";
-    private const string RetrieveEndpoint = "/verification/123456";
-    private const string CreateEndpoint = "/verification";
-
-    [Fact]
-    public void RetrieveVerificationProcess_CallsGetWithCorrectParameters()
+    [TestFixture]
+    [Category("Unit")] 
+    public class OmniVerifyClientTests
     {
-        // Arrange
-        var parameters = new Dictionary<string, string> { { "foo", "bar" } };
-        var expectedResponse = new TelesignResponse();
+        private const string TestCustomerId = "test_customer_id";
+        private const string TestApiKey = "dGVzdF9hcGlfa2V5"; //API key to a base64 string
+        private const string TestVerificationId = "123456";
+        private const string BaseUrl = "https://verify.telesign.com";
+        private MockHttpMessageHandler _mockHttp;
+        private OmniVerifyClient _client;
 
-        var mockClient = new Mock<OmniVerifyClient>(TestCustomerId, TestApiKey) { CallBase = true };
-        mockClient.Setup(c => c.Get(RetrieveEndpoint, parameters)).Returns(expectedResponse);
+        [SetUp]
+        public void SetUp()
+        {
+            _mockHttp = new MockHttpMessageHandler();
 
-        // Act
-        var response = mockClient.Object.RetrieveVerificationProcess(TestVerificationId, parameters);
+            // Patch RestClient to accept custom HttpClient
+            var httpClient = _mockHttp.ToHttpClient();
+            httpClient.BaseAddress = new Uri(BaseUrl);
 
-        // Assert
-        Assert.Equal(expectedResponse, response);
-        mockClient.Verify(c => c.Get(RetrieveEndpoint, parameters), Times.Once);
-    }
+            // Use reflection to inject the mock HttpClient into the RestClient base class
+            _client = new OmniVerifyClient(TestCustomerId, TestApiKey, BaseUrl);
+            typeof(Telesign.RestClient)
+                .GetField("httpClient", BindingFlags.NonPublic | BindingFlags.Instance)
+                .SetValue(_client, httpClient);
+        }
 
-    [Fact]
-    public async Task RetrieveVerificationProcessAsync_CallsGetAsyncWithCorrectParameters()
-    {
-        // Arrange
-        var parameters = new Dictionary<string, string> { { "foo", "bar" } };
-        var expectedResponse = new TelesignResponse();
+        [Test]
+        public void CreateVerificationProcess_CallsPostWithCorrectParameters()
+        {
+            var bodyParams = new Dictionary<string, object> { { "phone_number", "1234567890" } };
+            _mockHttp.When(HttpMethod.Post, $"{BaseUrl}/verification")
+                .Respond("application/json", "{\"reference_id\":\"123456\"}");
 
-        var mockClient = new Mock<OmniVerifyClient>(TestCustomerId, TestApiKey) { CallBase = true };
-        mockClient.Setup(c => c.GetAsync(RetrieveEndpoint, parameters)).ReturnsAsync(expectedResponse);
+            var response = _client.CreateVerificationProcess(bodyParams);
 
-        // Act
-        var response = await mockClient.Object.RetrieveVerificationProcessAsync(TestVerificationId, parameters);
+            Assert.IsNotNull(response);
+            Assert.That(response.StatusCode, Is.EqualTo(200).Or.EqualTo(201));
+            Assert.That(response.Json["reference_id"]?.ToString(), Is.EqualTo(TestVerificationId));
+        }
 
-        // Assert
-        Assert.Equal(expectedResponse, response);
-        mockClient.Verify(c => c.GetAsync(RetrieveEndpoint, parameters), Times.Once);
-    }
+        [Test]
+        public async Task CreateVerificationProcessAsync_CallsPostAsyncWithCorrectParameters()
+        {
+            var bodyParams = new Dictionary<string, object> { { "phone_number", "1234567890" } };
+            _mockHttp.When(HttpMethod.Post, $"{BaseUrl}/verification")
+                .Respond("application/json", "{\"reference_id\":\"123456\"}");
 
-    [Fact]
-    public void RetrieveVerificationProcess_ThrowsOnNullId()
-    {
-        var mockClient = new Mock<OmniVerifyClient>(TestCustomerId, TestApiKey) { CallBase = true };
-        Assert.Throws<ArgumentNullException>(() => mockClient.Object.RetrieveVerificationProcess(null));
-    }
+            var response = await _client.CreateVerificationProcessAsync(bodyParams);
 
-    [Fact]
-    public void CreateVerificationProcess_CallsPostWithCorrectParameters()
-    {
-        // Arrange
-        var bodyParams = new Dictionary<string, object> { { "phone_number", "1234567890" } };
-        var expectedResponse = new TelesignResponse();
+            Assert.IsNotNull(response);
+            Assert.That(response.StatusCode, Is.EqualTo(200).Or.EqualTo(201));
+            Assert.That(response.Json["reference_id"]?.ToString(), Is.EqualTo(TestVerificationId));
+        }
 
-        var mockClient = new Mock<OmniVerifyClient>(TestCustomerId, TestApiKey) { CallBase = true };
-        mockClient.Setup(c => c.Post(CreateEndpoint, bodyParams)).Returns(expectedResponse);
+        [Test]
+        public void RetrieveVerificationProcess_CallsGetWithCorrectParameters()
+        {
+            _mockHttp.When(HttpMethod.Get, $"{BaseUrl}/verification/{TestVerificationId}")
+                .Respond("application/json", "{\"status\":\"SUCCESS\"}");
 
-        // Act
-        var response = mockClient.Object.CreateVerificationProcess(bodyParams);
+            var response = _client.RetrieveVerificationProcess(TestVerificationId);
 
-        // Assert
-        Assert.Equal(expectedResponse, response);
-        mockClient.Verify(c => c.Post(CreateEndpoint, bodyParams), Times.Once);
-    }
+            Assert.IsNotNull(response);
+            Assert.That(response.StatusCode, Is.EqualTo(200));
+            Assert.That(response.Json["status"]?.ToString(), Is.EqualTo("SUCCESS"));
+        }
 
-    [Fact]
-    public async Task CreateVerificationProcessAsync_CallsPostAsyncWithCorrectParameters()
-    {
-        // Arrange
-        var bodyParams = new Dictionary<string, object> { { "phone_number", "1234567890" } };
-        var expectedResponse = new TelesignResponse();
+        [Test]
+        public async Task RetrieveVerificationProcessAsync_CallsGetAsyncWithCorrectParameters()
+        {
+            _mockHttp.When(HttpMethod.Get, $"{BaseUrl}/verification/{TestVerificationId}")
+                .Respond("application/json", "{\"status\":\"SUCCESS\"}");
 
-        var mockClient = new Mock<OmniVerifyClient>(TestCustomerId, TestApiKey) { CallBase = true };
-        mockClient.Setup(c => c.PostAsync(CreateEndpoint, bodyParams)).ReturnsAsync(expectedResponse);
+            var response = await _client.RetrieveVerificationProcessAsync(TestVerificationId);
 
-        // Act
-        var response = await mockClient.Object.CreateVerificationProcessAsync(bodyParams);
+            Assert.IsNotNull(response);
+            Assert.That(response.StatusCode, Is.EqualTo(200));
+            Assert.That(response.Json["status"]?.ToString(), Is.EqualTo("SUCCESS"));
+        }
 
-        // Assert
-        Assert.Equal(expectedResponse, response);
-        mockClient.Verify(c => c.PostAsync(CreateEndpoint, bodyParams), Times.Once);
+        [Test]
+        public void RetrieveVerificationProcess_InvalidId_Returns404()
+        {
+            _mockHttp.When(HttpMethod.Get, $"{BaseUrl}/verification/invalid")
+                .Respond(HttpStatusCode.NotFound, "application/json", "{\"error\":\"Not found\"}");
+
+            var response = _client.RetrieveVerificationProcess("invalid");
+
+            Assert.IsNotNull(response);
+            Assert.That(response.StatusCode, Is.EqualTo(404));
+            Assert.That(response.Json["error"]?.ToString(), Is.EqualTo("Not found"));
+        }
+
+        [Test]
+        public void RetrieveVerificationProcess_ThrowsOnNullId()
+        {
+            Assert.Throws<AggregateException>(() => _client.RetrieveVerificationProcess(null));
+        }
     }
 }

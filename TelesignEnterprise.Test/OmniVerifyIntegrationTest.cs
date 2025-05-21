@@ -1,0 +1,104 @@
+
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using NUnit.Framework;
+using TelesignEnterprise;
+
+namespace TelesignEnterprise.Tests.Integration
+{
+    [TestFixture]
+    [Category("Integration")] 
+    public class OmniVerifyClientIntegrationTests
+    {
+        private const string RealCustomerId = "F797DF2A-DE2D-452D-971A-A62AAD2EEF52";
+        private const string RealApiKey = "Y8MY8YQBPDy/S41+Id+/xPvubb79UiQHXDp6DMlfsxdwcixjH1RP4DP3DNHuoAuJ0ljvWWOMU/omUv46h9tDCA==";
+
+        private OmniVerifyClient _client;
+
+        [OneTimeSetUp]
+        public void OneTimeSetup()
+        {
+            _client = new OmniVerifyClient(RealCustomerId, RealApiKey);
+        }
+
+        //Synchronous test case for create-and-retrieve flow
+        [Test, Description("Create a verification process and retrieve it synchronously")]
+        public void CreateAndRetrieveVerificationProcessSuccess_Sync()
+        {
+            var bodyParams = new Dictionary<string, object>
+            {
+                { "recipient", new Dictionary<string, string> { { "phone_number", "+918105955669" } } },
+                { "verification_policy", new List<object>
+                    {
+                        new Dictionary<string, object>
+                        {
+                            { "method", "sms" },
+                            { "fallback_time", 30 }
+                        }
+                    }
+                }
+            };
+
+            var createResponse = _client.CreateVerificationProcess(bodyParams);
+
+            Assert.NotNull(createResponse, "CreateVerificationProcess response should not be null");
+            Assert.That(createResponse.StatusCode, Is.InRange(200, 299), "CreateVerificationProcess should succeed");
+
+            Assert.IsTrue(createResponse.Json.ContainsKey("reference_id"), "Response should contain reference_id");
+            string verificationId = createResponse.Json["reference_id"].ToString();
+
+            var retrieveResponse = _client.RetrieveVerificationProcess(verificationId);
+
+            Assert.NotNull(retrieveResponse, "RetrieveVerificationProcess response should not be null");
+            Assert.That(retrieveResponse.StatusCode, Is.InRange(200, 299), "RetrieveVerificationProcess should succeed");
+        }
+
+        //Asynchronous test case for create-and-retrieve flow
+        [Test, Description("Create a verification process and retrieve it asynchronously")]
+        public async Task CreateAndRetrieveVerificationProcessSuccess_Async()
+        {
+            var bodyParams = new Dictionary<string, object>
+            {
+                { "recipient", new Dictionary<string, string> { { "phone_number", "+11234567890" } } },
+                { "verification_policy", new List<object>
+                    {
+                        new Dictionary<string, object>
+                        {
+                            { "method", "sms" },
+                            { "fallback_time", 30 }
+                        }
+                    }
+                }
+            };
+
+            // Optional delay to avoid potential rate limiting or timing issues
+            await Task.Delay(5000);
+
+            var createResponse = await _client.CreateVerificationProcessAsync(bodyParams);
+
+            Assert.NotNull(createResponse, "CreateVerificationProcessAsync response should not be null");
+            Assert.That(createResponse.StatusCode, Is.InRange(200, 299), "CreateVerificationProcessAsync should succeed");
+
+            Assert.IsTrue(createResponse.Json.ContainsKey("reference_id"), "Response should contain reference_id");
+            string verificationId = createResponse.Json["reference_id"].ToString();
+
+            var retrieveResponse = await _client.RetrieveVerificationProcessAsync(verificationId);
+
+            Assert.NotNull(retrieveResponse, "RetrieveVerificationProcessAsync response should not be null");
+            Assert.That(retrieveResponse.StatusCode, Is.InRange(200, 299), "RetrieveVerificationProcessAsync should succeed");
+        }
+
+        //Negative test case for invalid ID
+        [Test, Description("Retrieve verification process with invalid ID returns 400 Not Found")]
+        public void RetrieveVerificationProcess_InvalidId()
+        {
+            string invalidVerificationId = "invalid-id-12345";
+
+            var response = _client.RetrieveVerificationProcess(invalidVerificationId);
+
+            Assert.NotNull(response, "Response should not be null");
+            Assert.AreEqual(400, response.StatusCode, "Status code should be 400 for invalid ID");
+        }
+    }
+}
