@@ -7,7 +7,8 @@ Console.WriteLine("1. Execute Messaging examples");
 Console.WriteLine("2. Execute PhoneId examples");
 Console.WriteLine("3. Execute Verify examples");
 Console.WriteLine("4. Execute Voice examples");
-Console.WriteLine("5. Quit");
+Console.WriteLine("5. Execute OmniVerify examples");
+Console.WriteLine("6. Quit");
 
 int options = -1;
 bool validOption;
@@ -45,7 +46,6 @@ switch (options)
         VerifyExample verifyExample = new(apiKey, customerId, phoneNumber);
         verifyExample.ReportCompletionAfterReceivingSMS();
         verifyExample.ReportCompletionAfterReceivingVoiceCall();
-        verifyExample.SendOmniVerificationSmsChannel();
         verifyExample.SendCustomVerifySMS();
         verifyExample.SendCustomVerifySMSInDifferentLanguage();
         verifyExample.SendSMSWithVerificationCode();
@@ -58,6 +58,16 @@ switch (options)
         voiceExample.SendVoiceCall();
         voiceExample.SendVoiceCallFrench();
         voiceExample.SendVoiceCallWithVerificationCode();
+    break;
+    case 5:
+        OmniVerifyExample omniExample = new(apiKey, customerId, phoneNumber);
+        omniExample.SendOmniVerificationSmsChannel();
+        Console.WriteLine("Enter reference ID to retrieve verification process (or leave blank to skip):");
+        string? refId = Console.ReadLine();
+        if (!string.IsNullOrWhiteSpace(refId))
+        {
+            omniExample.RetrieveVerificationProcess(refId.Trim());
+        }
     break;
     default:
         Console.WriteLine("Bye! :)");

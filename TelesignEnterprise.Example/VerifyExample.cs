@@ -51,7 +51,7 @@ public class VerifyExample(string apiKey, string customerId, string phoneNumber)
                 }
             }
             else {
-                Console.WriteLine("Code validation ommited");
+                Console.WriteLine("Code validation omited");
             }
         }
         catch (Exception e)
@@ -104,46 +104,7 @@ public class VerifyExample(string apiKey, string customerId, string phoneNumber)
             }
             else
             {
-                Console.WriteLine("Code validation ommited");
-            }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-        }
-    }
-
-    public void SendOmniVerificationSmsChannel()
-    {
-        Console.WriteLine("***Send OTP code with new verify API***");
-        string verifyCode = "12345";
-
-        Dictionary<string, object> parameters = [];
-        parameters.Add("security_factor", verifyCode);
-
-        try
-        {
-            VerifyClient verifyClient = new(_CustomerId, _ApiKey);
-            Telesign.RestClient.TelesignResponse telesignResponse = verifyClient.CreateVerificationProcess(_PhoneNumber, parameters);
-            Console.WriteLine($"Http Status code: {telesignResponse.StatusCode}");
-            Console.WriteLine($"Response body: {Environment.NewLine + telesignResponse.Body}");
-
-            Console.WriteLine("Please enter your verification code:");
-            string? code = Console.ReadLine();
-            if (!string.IsNullOrEmpty(code)) 
-            {
-                if (verifyCode == code.Trim())
-                {
-                    Console.WriteLine("Your code is correct.");
-                }
-                else
-                {
-                    Console.WriteLine("Your code is incorrect.");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Code validation ommited");
+                Console.WriteLine("Code validation omited");
             }
         }
         catch (Exception e)
@@ -225,7 +186,7 @@ public class VerifyExample(string apiKey, string customerId, string phoneNumber)
             }
             else
             {
-                Console.WriteLine("Code validation ommited");
+                Console.WriteLine("Code validation omited");
             }
         }
         catch (Exception e)
@@ -310,7 +271,7 @@ public class VerifyExample(string apiKey, string customerId, string phoneNumber)
             }
             else
             {
-                Console.WriteLine("Code validation ommited");
+                Console.WriteLine("Code validation omited");
             }
         }
         catch (Exception e)
