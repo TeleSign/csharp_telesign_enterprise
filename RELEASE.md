@@ -1,3 +1,6 @@
+2.7.0
+- Added C# SDK method for Update a Verification Process action
+
 2.6.0
 - Added C# SDK method for Retrieve a Verification Process action
 - Added the TelesignEnterprise.Test folder for adding the unit and integrated test cases

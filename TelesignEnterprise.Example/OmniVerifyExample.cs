@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Telesign;
 
 namespace TelesignEnterprise.Example
 {
@@ -101,22 +103,22 @@ namespace TelesignEnterprise.Example
         public void SendOmniVerificationSmsChannel()
         {
             Console.WriteLine("***Send OTP code with new verify API (OmniVerifyClient)***");
-            
-            string verifyCode = "12345"; 
+
+            string verifyCode = "12345";
             string? referenceId = null;
 
             try
             {
                 var bodyParams = new Dictionary<string, object>
                 {
-                    { 
-                        "recipient", new Dictionary<string, string> 
-                        { 
-                            { "phone_number", _PhoneNumber } 
-                        } 
+                    {
+                        "recipient", new Dictionary<string, string>
+                        {
+                            { "phone_number", _PhoneNumber }
+                        }
                     },
                     { "security_factor", verifyCode },
-                    { 
+                    {
                         "verification_policy", new List<Dictionary<string, object>>
                         {
                             new Dictionary<string, object>
@@ -130,7 +132,7 @@ namespace TelesignEnterprise.Example
 
                 OmniVerifyClient omniClient = new(_CustomerId, _ApiKey);
                 Telesign.RestClient.TelesignResponse response = omniClient.CreateVerificationProcess(bodyParams);
-                
+
                 Console.WriteLine($"HTTP Status Code: {response.StatusCode}");
                 Console.WriteLine($"Response Body:\n{response.Body}");
 
@@ -139,7 +141,7 @@ namespace TelesignEnterprise.Example
                     referenceId = response.Json["reference_id"]?.ToString();
                     Console.WriteLine($"HTTP Status Code: {response.StatusCode}");
                     Console.WriteLine($"Verification Reference ID: {referenceId}");
-                    
+
                     Console.WriteLine("Please enter your verification code:");
                     string? userCode = Console.ReadLine()?.Trim();
 
@@ -164,6 +166,152 @@ namespace TelesignEnterprise.Example
             {
                 Console.WriteLine($"Critical error: {ex.Message}");
                 Console.WriteLine(ex.StackTrace);
+            }
+        }
+
+        /// <summary>
+        /// Update a verification process synchronously using OmniVerifyClient.
+        /// </summary>
+        public void UpdateVerificationProcess(string referenceId)
+        {
+            Console.WriteLine("***Update verification process (OmniVerifyClient)***");
+
+            try
+            {
+                var omniClient = new OmniVerifyClient(_CustomerId, _ApiKey);
+
+                var updateParams = new Dictionary<string, object>
+                {
+                    { "verification_policy", new List<Dictionary<string, object>>
+                        {
+                            new Dictionary<string, object>
+                            {
+                                { "method", "sms" },
+                                { "fallback_time", 60 }
+                            }
+                        }
+                    },
+                };
+
+                var response = omniClient.UpdateVerificationProcess(referenceId, updateParams);
+
+                Console.WriteLine($"HTTP Status Code: {response.StatusCode}");
+                Console.WriteLine($"Response Body:\n{response.Body}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating verification process: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Update a verification process asynchronously using OmniVerifyClient.
+        /// </summary>
+        public async Task UpdateVerificationProcessAsync(string referenceId)
+        {
+            Console.WriteLine("***Update verification process asynchronously (OmniVerifyClient)***");
+
+            try
+            {
+                var omniClient = new OmniVerifyClient(_CustomerId, _ApiKey);
+
+                var updateParams = new Dictionary<string, object>
+                {
+                    { "verification_policy", new List<Dictionary<string, object>>
+                        {
+                            new Dictionary<string, object>
+                            {
+                                { "method", "sms" },
+                                { "fallback_time", 60 }
+                            }
+                        }
+                    },
+                };
+
+                var response = await omniClient.UpdateVerificationProcessAsync(referenceId, updateParams);
+
+                Console.WriteLine($"HTTP Status Code: {response.StatusCode}");
+                Console.WriteLine($"Response Body:\n{response.Body}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating verification process asynchronously: {ex.Message}");
+            }
+        }
+
+        public void UpdateVerificationState(string referenceId, string securityCode)
+        {
+            try
+            {
+                var omniClient = new OmniVerifyClient(_CustomerId, _ApiKey);
+                var response = omniClient.UpdateVerificationProcessStateBasicAuth(
+                    referenceId,
+                    "finalize",
+                    securityCode
+                );
+
+                Console.WriteLine($"Finalization Status: {response.StatusCode}");
+                Console.WriteLine($"Finalization Response:\n{response.Body}");
+                HandleVerificationStatus(response);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating verification state: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Optionally, an async version for updating verification state
+        /// </summary>
+        public async Task UpdateVerificationStateAsync(string referenceId, string securityCode)
+        {
+            try
+            {
+                var omniClient = new OmniVerifyClient(_CustomerId, _ApiKey);
+                var response = await omniClient.UpdateVerificationProcessStateBasicAuthAsync(
+                    referenceId,
+                    "finalize",
+                    securityCode
+                );
+
+                Console.WriteLine($"State Update Status: {response.StatusCode}");
+                Console.WriteLine($"Response Body:\n{response.Body}");
+                HandleVerificationStatus(response);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating verification state: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Handles verification status response from API
+        /// </summary>
+        private void HandleVerificationStatus(RestClient.TelesignResponse response)
+        {
+            if (response?.Json == null || !response.Json.ContainsKey("status")) return;
+
+            var statusToken = response.Json["status"];
+            if (statusToken != null)
+            {
+                int code = statusToken["code"]?.ToObject<int>() ?? 0;
+                string description = statusToken["description"]?.ToString() ?? "Unknown status";
+
+                switch (code)
+                {
+                    case 3900:
+                        Console.WriteLine("Verification successful!");
+                        break;
+                    case 3904:
+                        Console.WriteLine("Temporary failure: Verification Failed! incorrect code entered");
+                        break;
+                    case 3909:
+                        Console.WriteLine("Permanent failure: Verification Unsuccessfull! Invalid code entered, too many attemps");
+                        break;
+                    default:
+                        Console.WriteLine($"Unexpected status: {code} - {description}");
+                        break;
+                }
             }
         }
     }

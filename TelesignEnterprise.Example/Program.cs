@@ -7,8 +7,9 @@ Console.WriteLine("1. Execute Messaging examples");
 Console.WriteLine("2. Execute PhoneId examples");
 Console.WriteLine("3. Execute Verify examples");
 Console.WriteLine("4. Execute Voice examples");
-Console.WriteLine("5. Execute OmniVerify examples");
-Console.WriteLine("6. Quit");
+Console.WriteLine("5. Execute OmniVerify examples Retrieve");
+Console.WriteLine("6. Execute OmniVerify examples Update");
+Console.WriteLine("7. Quit");
 
 int options = -1;
 bool validOption;
@@ -16,9 +17,9 @@ bool validOption;
 do
 {
     if (options != -1)
-        Console.WriteLine("Invalid option. Please type a number between 1 and 5");
+        Console.WriteLine("Invalid option.Please type a number between 1 and 7");
     _ = int.TryParse(Console.ReadLine(), out options);
-    validOption = options > 0 && options < 6;
+    validOption = options > 0 && options < 8; 
 }
 while(!validOption);
 
@@ -36,12 +37,12 @@ switch (options)
         messagingExample.SendOmniMessageRcsChannel();
         messagingExample.SendOmniMessageSmsChannel();
         messagingExample.SendOmniMessageSmsRcsWithParams();
-    break;
+        break;
     case 2:
         PhoneIdExample phoneIdExample = new(apiKey, customerId, phoneNumber);
         phoneIdExample.CheckPhoneNumberRiskLevel();
         phoneIdExample.CheckPhoneNumberDeactivated();
-    break;
+        break;
     case 3:
         VerifyExample verifyExample = new(apiKey, customerId, phoneNumber);
         verifyExample.ReportCompletionAfterReceivingSMS();
@@ -52,13 +53,13 @@ switch (options)
         verifyExample.SendCustomVerifyVoiceCallInDifferentLanguage();
         verifyExample.SendCustomVerifyVoiceCallWithTextToSpeech();
         verifyExample.SendVoiceCallWithVerificationCode();
-    break;
+        break;
     case 4:
         VoiceExample voiceExample = new(apiKey, customerId, phoneNumber);
         voiceExample.SendVoiceCall();
         voiceExample.SendVoiceCallFrench();
         voiceExample.SendVoiceCallWithVerificationCode();
-    break;
+        break;
     case 5:
         OmniVerifyExample omniExample = new(apiKey, customerId, phoneNumber);
         omniExample.SendOmniVerificationSmsChannel();
@@ -68,8 +69,23 @@ switch (options)
         {
             omniExample.RetrieveVerificationProcess(refId.Trim());
         }
-    break;
+        break;
+    case 6:
+        OmniVerifyExample omniUpdateExample = new(apiKey, customerId, phoneNumber);
+        Console.WriteLine("Enter reference ID to update verification process:");
+        string? updateRefId = Console.ReadLine();
+        Console.WriteLine("Enter the OTP/security code received by the user:");
+        string? securityCode = Console.ReadLine();
+        if (!string.IsNullOrWhiteSpace(updateRefId) && !string.IsNullOrWhiteSpace(securityCode))
+        {
+            omniUpdateExample.UpdateVerificationState(updateRefId.Trim(), securityCode.Trim());
+        }
+        else
+        {
+            Console.WriteLine("Reference ID and security code are required. Skipping update.");
+        }
+        break;
     default:
         Console.WriteLine("Bye! :)");
-    break;
+        break;
 }
