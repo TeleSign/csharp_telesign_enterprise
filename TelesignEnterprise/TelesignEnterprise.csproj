@@ -34,12 +34,12 @@
     </None>
   </ItemGroup>
 
-  <!-- <ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Telesign" Version="2.5.0" />
-  </ItemGroup> -->
+  </ItemGroup>
   
    <ItemGroup>
-      <ProjectReference Include="/Users/mmohanty/code/csharp_telesign/Telesign/Telesign.csproj" />
+      <ProjectReference Include="../TelesignEnterprise/TelesignEnterprise.csproj" />
   </ItemGroup>
   
    <ItemGroup>
