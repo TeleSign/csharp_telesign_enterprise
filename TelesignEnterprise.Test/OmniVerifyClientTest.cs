@@ -41,30 +41,32 @@ namespace TelesignEnterprise.Tests.Unit
         [Test]
         public void CreateVerificationProcess_CallsPostWithCorrectParameters()
         {
-            var bodyParams = new Dictionary<string, object> { { "phone_number", "1234567890" } };
+            var parameters = new Dictionary<string, object>();
             _mockHttp.When(HttpMethod.Post, $"{BaseUrl}/verification")
-                .Respond("application/json", "{\"reference_id\":\"123456\"}");
+            .Respond("application/json", "{\"reference_id\":\"123456\"}");
 
-            var response = _client.CreateVerificationProcess(bodyParams);
+            var response = _client.CreateVerificationProcess("1234567890", parameters);
 
             Assert.IsNotNull(response);
             Assert.That(response.StatusCode, Is.EqualTo(200).Or.EqualTo(201));
             Assert.That(response.Json["reference_id"]?.ToString(), Is.EqualTo(TestVerificationId));
         }
+
 
         [Test]
         public async Task CreateVerificationProcessAsync_CallsPostAsyncWithCorrectParameters()
         {
-            var bodyParams = new Dictionary<string, object> { { "phone_number", "1234567890" } };
+            var parameters = new Dictionary<string, object>();
             _mockHttp.When(HttpMethod.Post, $"{BaseUrl}/verification")
-                .Respond("application/json", "{\"reference_id\":\"123456\"}");
+            .Respond("application/json", "{\"reference_id\":\"123456\"}");
 
-            var response = await _client.CreateVerificationProcessAsync(bodyParams);
+            var response = await _client.CreateVerificationProcessAsync("1234567890", parameters);
 
             Assert.IsNotNull(response);
             Assert.That(response.StatusCode, Is.EqualTo(200).Or.EqualTo(201));
             Assert.That(response.Json["reference_id"]?.ToString(), Is.EqualTo(TestVerificationId));
         }
+
 
         [Test]
         public void RetrieveVerificationProcess_CallsGetWithCorrectParameters()
