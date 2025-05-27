@@ -1,3 +1,8 @@
+2.6.1
+- Added C# SDK method CreateVerificationProcess in VerifyClient class
+- Added the string parameter called “phoneNumber” to OmniVerifyClient class
+- Updated version in the TelesignEnterprise.csproj file 
+
 2.6.0
 - Added C# SDK method for Retrieve a Verification Process action
 - Added the TelesignEnterprise.Test folder for adding the unit and integrated test cases
