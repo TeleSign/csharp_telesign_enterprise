@@ -1,5 +1,5 @@
 2.6.1
-- Added C# SDK method CreateVerificationProcess in VerifyClient class
+- Refactored C# SDK CreateVerificationProcess method in VerifyClient to use the new method of the same name in             OmniVerifyClient class.This method in VerifyClient is now deprecated.
 - Added the string parameter called “phoneNumber” to OmniVerifyClient class
 - Updated version in the TelesignEnterprise.csproj file 
 
