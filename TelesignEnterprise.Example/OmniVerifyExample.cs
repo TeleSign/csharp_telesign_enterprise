@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace TelesignEnterprise.Example
 {
@@ -56,7 +57,6 @@ namespace TelesignEnterprise.Example
 
             var bodyParams = new Dictionary<string, object>
             {
-                { "recipient", new Dictionary<string, string> { { "phone_number", _PhoneNumber } } },
                 { "security_factor", verifyCode },
                 { "verification_policy", new List<Dictionary<string, object>>
                     {
@@ -68,7 +68,7 @@ namespace TelesignEnterprise.Example
             try
             {
                 var omniClient = new OmniVerifyClient(_CustomerId, _ApiKey);
-                var response = await omniClient.CreateVerificationProcessAsync(bodyParams);
+                var response = await omniClient.CreateVerificationProcessAsync(_PhoneNumber, bodyParams);
 
                 Console.WriteLine($"HTTP Status Code: {response.StatusCode}");
                 Console.WriteLine($"Response Body:\n{response.Body}");
@@ -109,15 +109,8 @@ namespace TelesignEnterprise.Example
             {
                 var bodyParams = new Dictionary<string, object>
                 {
-                    { 
-                        "recipient", new Dictionary<string, string> 
-                        { 
-                            { "phone_number", _PhoneNumber } 
-                        } 
-                    },
                     { "security_factor", verifyCode },
-                    { 
-                        "verification_policy", new List<Dictionary<string, object>>
+                    { "verification_policy", new List<Dictionary<string, object>>
                         {
                             new Dictionary<string, object>
                             {
@@ -129,7 +122,7 @@ namespace TelesignEnterprise.Example
                 };
 
                 OmniVerifyClient omniClient = new(_CustomerId, _ApiKey);
-                Telesign.RestClient.TelesignResponse response = omniClient.CreateVerificationProcess(bodyParams);
+                Telesign.RestClient.TelesignResponse response = omniClient.CreateVerificationProcess(_PhoneNumber, bodyParams);
                 
                 Console.WriteLine($"HTTP Status Code: {response.StatusCode}");
                 Console.WriteLine($"Response Body:\n{response.Body}");
@@ -139,6 +132,7 @@ namespace TelesignEnterprise.Example
                     referenceId = response.Json["reference_id"]?.ToString();
                     Console.WriteLine($"HTTP Status Code: {response.StatusCode}");
                     Console.WriteLine($"Verification Reference ID: {referenceId}");
+                    Console.WriteLine("verification_policy:" + Newtonsoft.Json.JsonConvert.SerializeObject(bodyParams["verification_policy"]));
                     
                     Console.WriteLine("Please enter your verification code:");
                     string? userCode = Console.ReadLine()?.Trim();
