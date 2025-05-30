@@ -41,15 +41,55 @@ namespace TelesignEnterprise
                 sdkVersionOrigin: Assembly.GetAssembly(typeof(OmniVerifyClient)).GetName().Version.ToString(),
                 sdkVersionDependency: Assembly.GetAssembly(typeof(RestClient)).GetName().Version.ToString())
         { }
-
-        public TelesignResponse CreateVerificationProcess(Dictionary<string, object> bodyParams)
+        
+        public TelesignResponse CreateVerificationProcess(string phoneNumber, Dictionary<string, object> parameters = null)
         {
-            return this.Post(OMNIVERIFY_PROCESS_CREATE_RESOURCE, bodyParams);
-        }   
+            if (parameters == null)
+                parameters = new Dictionary<string, object>();
 
-        public Task<TelesignResponse> CreateVerificationProcessAsync(Dictionary<string, object> bodyParams)
-        {
-            return this.PostAsync(OMNIVERIFY_PROCESS_CREATE_RESOURCE, bodyParams);
+            parameters["recipient"] = new Dictionary<string, string>
+            {
+                { "phone_number", phoneNumber }
+            };
+
+            if (!parameters.ContainsKey("verification_policy"))
+            {
+                parameters["verification_policy"] = new List<Dictionary<string, object>>
+                {
+                    new Dictionary<string, object>
+                    {
+                        { "method", "sms" },
+                        { "fallback_time", 30 }
+                    }
+                };
+            }
+
+            return this.Post(OMNIVERIFY_PROCESS_CREATE_RESOURCE, parameters);
+        }
+
+        public async Task<TelesignResponse> CreateVerificationProcessAsync(string phoneNumber, Dictionary<string, object> parameters = null)
+        {   
+            if (parameters == null)
+                parameters = new Dictionary<string, object>();
+
+            parameters["recipient"] = new Dictionary<string, string>
+            {
+                { "phone_number", phoneNumber }
+            };
+
+            if (!parameters.ContainsKey("verification_policy"))
+            {
+                parameters["verification_policy"] = new List<Dictionary<string, object>>
+                {
+                    new Dictionary<string, object>
+                    {
+                        { "method", "sms" },
+                        { "fallback_time", 30 }
+                    }
+                };
+            }
+
+            return await this.PostAsync(OMNIVERIFY_PROCESS_CREATE_RESOURCE, parameters);
         }
 
         public TelesignResponse RetrieveVerificationProcess(string verificationId, Dictionary<string, string> parameters = null)
