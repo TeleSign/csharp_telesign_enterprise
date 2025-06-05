@@ -1,3 +1,6 @@
+2.7.0
+- Added C# SDK method for Update a Verification Process action
+
 2.6.1
 - Refactored C# SDK CreateVerificationProcess method in VerifyClient to use the new method of the same name in OmniVerifyClient class.
   This method in VerifyClient is now deprecated.
