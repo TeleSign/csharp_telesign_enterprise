@@ -130,7 +130,7 @@ namespace TelesignEnterprise.Example
                 };
 
                 OmniVerifyClient omniClient = new(_CustomerId, _ApiKey);
-                Telesign.RestClient.TelesignResponse response = omniClient.CreateVerificationProcess(bodyParams);
+                Telesign.RestClient.TelesignResponse response = omniClient.CreateVerificationProcess(_PhoneNumber, bodyParams);
 
                 Console.WriteLine($"HTTP Status Code: {response.StatusCode}");
                 Console.WriteLine($"Response Body:\n{response.Body}");

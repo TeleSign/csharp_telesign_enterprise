@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net48;net481;net6;net7;net8;net9.0</TargetFrameworks>
@@ -35,11 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Telesign" Version="2.5.0" />
-  </ItemGroup>
-  
-   <ItemGroup>
-      <ProjectReference Include="../TelesignEnterprise/TelesignEnterprise.csproj" />
+    <PackageReference Include="Telesign" Version="2.6.0" />
   </ItemGroup>
   
    <ItemGroup>
