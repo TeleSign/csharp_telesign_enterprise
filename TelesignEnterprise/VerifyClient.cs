@@ -134,5 +134,10 @@ namespace TelesignEnterprise
         {
             return this.Put(string.Format(VERIFY_COMPLETION_RESOURCE, referenceId), parameters);
         }
+        public TelesignResponse CreateVerificationProcess(string phoneNumber, Dictionary<string, object> parameters = null)
+        {
+            OmniVerifyClient verifyClientNew = new OmniVerifyClient(this.customerId, this.apiKey);
+            return verifyClientNew.CreateVerificationProcess(phoneNumber, parameters);
+        }
     }
 }

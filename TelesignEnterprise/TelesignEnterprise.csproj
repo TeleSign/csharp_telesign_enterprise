@@ -16,7 +16,11 @@
             For full release notes see https://github.com/TeleSign/csharp_telesign_enterprise/blob/master/RELEASE.md
             ]]></PackageReleaseNotes>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+<<<<<<< HEAD
 	<Version>2.7.0</Version>
+=======
+	<Version>2.6.1</Version>
+>>>>>>> 327502a09d16e89ca664762649c759c09763d3ae
   </PropertyGroup>
 
   <ItemGroup>

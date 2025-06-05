@@ -28,7 +28,6 @@ namespace TelesignEnterprise.Tests.Integration
         {
             var bodyParams = new Dictionary<string, object>
             {
-                { "recipient", new Dictionary<string, string> { { "phone_number", "+11234567890" } } },
                 { "verification_policy", new List<object>
                     {
                         new Dictionary<string, object>
@@ -39,8 +38,7 @@ namespace TelesignEnterprise.Tests.Integration
                     }
                 }
             };
-
-            var createResponse = _client.CreateVerificationProcess(bodyParams);
+            var createResponse = _client.CreateVerificationProcess("+11234567890", bodyParams);
 
             Assert.NotNull(createResponse, "CreateVerificationProcess response should not be null");
             Assert.That(createResponse.StatusCode, Is.InRange(200, 299), "CreateVerificationProcess should succeed");
@@ -60,7 +58,6 @@ namespace TelesignEnterprise.Tests.Integration
         {
             var bodyParams = new Dictionary<string, object>
             {
-                { "recipient", new Dictionary<string, string> { { "phone_number", "+11234567891" } } },
                 { "verification_policy", new List<object>
                     {
                         new Dictionary<string, object>
@@ -75,7 +72,7 @@ namespace TelesignEnterprise.Tests.Integration
             // Optional delay to avoid potential rate limiting or timing issues
             await Task.Delay(5000);
 
-            var createResponse = await _client.CreateVerificationProcessAsync(bodyParams);
+            var createResponse = await _client.CreateVerificationProcessAsync("+11234567891", bodyParams);
 
             Assert.NotNull(createResponse, "CreateVerificationProcessAsync response should not be null");
             Assert.That(createResponse.StatusCode, Is.InRange(200, 299), "CreateVerificationProcessAsync should succeed");

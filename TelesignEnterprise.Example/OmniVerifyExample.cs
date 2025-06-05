@@ -58,7 +58,6 @@ namespace TelesignEnterprise.Example
 
             var bodyParams = new Dictionary<string, object>
             {
-                { "recipient", new Dictionary<string, string> { { "phone_number", _PhoneNumber } } },
                 { "security_factor", verifyCode },
                 { "verification_policy", new List<Dictionary<string, object>>
                     {
@@ -70,7 +69,7 @@ namespace TelesignEnterprise.Example
             try
             {
                 var omniClient = new OmniVerifyClient(_CustomerId, _ApiKey);
-                var response = await omniClient.CreateVerificationProcessAsync(bodyParams);
+                var response = await omniClient.CreateVerificationProcessAsync(_PhoneNumber, bodyParams);
 
                 Console.WriteLine($"HTTP Status Code: {response.StatusCode}");
                 Console.WriteLine($"Response Body:\n{response.Body}");
