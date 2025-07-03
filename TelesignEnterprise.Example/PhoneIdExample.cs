@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace TelesignEnterprise.Example;
@@ -35,31 +36,32 @@ public class PhoneIdExample(string apiKey, string customerId, string phoneNumber
         }
     }
 
-    public void CheckPhoneNumberDeactivated()
+    public void CheckPhoneIdPath()
     {
-        string ucid = "ATCK";
-
+        Console.WriteLine("***Check Phone ID (Path-based POST)***");
         try
         {
-            Console.WriteLine("***Check phone number deactivated***");
             PhoneIdClient phoneIdClient = new(_CustomerId, _ApiKey);
-            Telesign.RestClient.TelesignResponse telesignResponse = phoneIdClient.NumberDeactivation(_PhoneNumber, ucid);
-            Console.WriteLine($"Http Status code: {telesignResponse.StatusCode}");
-            Console.WriteLine($"Response body: {Environment.NewLine + telesignResponse.Body}");
 
-            if (telesignResponse.OK)
+            var parameters = new Dictionary<string, object>
             {
-                if (telesignResponse.Json["number_deactivation"]["last_deactivated"].Type != JTokenType.Null)
-                {
-                    Console.WriteLine(string.Format("Phone number {0} was last deactivated {1}.",
-                            telesignResponse.Json["number_deactivation"]["number"],
-                            telesignResponse.Json["number_deactivation"]["last_deactivated"]));
-                }
-                else
-                {
-                    Console.WriteLine(string.Format("Phone number {0} has not been deactivated.",
-                            telesignResponse.Json["number_deactivation"]["number"]));
-                }
+                { "account_lifecycle_event", "sign-in" },
+                { "external_id", "example_external_id" },
+                { "originating_ip", "203.0.113.42" },
+                { "addons", new Dictionary<string, object> { { "consent", new Dictionary<string, int> { { "method", 1 } } } } }
+            };
+
+            var response = phoneIdClient.PhoneIdPath(_PhoneNumber, parameters);
+
+            Console.WriteLine($"Http Status code: {response.StatusCode}");
+            try
+            {
+
+                Console.WriteLine(JToken.Parse(response.Body).ToString(Formatting.Indented));
+            }
+            catch (JsonReaderException)
+            {
+                Console.WriteLine(response.Body);
             }
         }
         catch (Exception e)
@@ -67,4 +69,38 @@ public class PhoneIdExample(string apiKey, string customerId, string phoneNumber
             Console.WriteLine(e);
         }
     }
+
+
+    public void CheckPhoneIdBody()
+    {
+        Console.WriteLine("***Check Phone ID (Payload-based POST)***");
+        try
+        {
+            PhoneIdClient phoneIdClient = new(_CustomerId, _ApiKey);
+
+            var parameters = new Dictionary<string, object>
+            {
+                { "phone_number", _PhoneNumber }, 
+                { "consent", new Dictionary<string, int> { { "method", 1 } } }
+            };
+
+            var response = phoneIdClient.PhoneIdBody(_PhoneNumber, parameters);
+
+            Console.WriteLine($"Http Status code: {response.StatusCode}");
+            try
+            {
+
+                Console.WriteLine(JToken.Parse(response.Body).ToString(Formatting.Indented));
+            }
+            catch (JsonReaderException)
+            {
+                Console.WriteLine(response.Body);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
 }

@@ -1,3 +1,9 @@
+2.8.0
+- Added C# SDK methods for full support of the latest Phone ID product.
+  These methods retrieve phone number information via POST requests.The phone number can be provided 
+  either in the URL path or in the request body, supporting /v1/phoneid/{phone_number} and /v1/phoneid endpoints.
+- Removed all functionality and methods for Legacy PID Contact and Legacy PID Number Deactivation from the C# SDK.
+
 2.7.0
 - Added C# SDK method for Update a Verification Process action
 

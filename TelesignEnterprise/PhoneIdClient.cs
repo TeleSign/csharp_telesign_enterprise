@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Net;
 using System.Reflection;
 using _PhoneIdClient = Telesign.PhoneIdClient;
+using System;
+using System.Threading.Tasks;
 
 namespace TelesignEnterprise
 {
@@ -17,9 +19,9 @@ namespace TelesignEnterprise
     {
         private const string PHONEID_STANDARD_RESOURCE = "/v1/phoneid/standard/{0}";
         private const string PHONEID_SCORE_RESOURCE = "/v1/phoneid/score/{0}";
-        private const string PHONEID_CONTACT_RESOURCE = "/v1/phoneid/contact/{0}";
         private const string PHONEID_LIVE_RESOURCE = "/v1/phoneid/live/{0}";
-        private const string PHONEID_NUMBER_DEACTIVATION_RESOURCE = "/v1/phoneid/number_deactivation/{0}";
+        private const string PHONEID_PATH_RESOURCE = "/v1/phoneid/{0}";
+        private const string PHONEID_PAYLOAD_RESOURCE = "/v1/phoneid";
 
         public PhoneIdClient(string customerId,
                              string apiKey)
@@ -93,24 +95,6 @@ namespace TelesignEnterprise
         }
 
         /// <summary>
-        /// The PhoneID Contact API delivers contact information related to the subscriber's phone number to provide another
-        /// set of indicators for established risk engines.
-        ///
-        /// See https://developer.telesign.com/docs/rest_api-phoneid-contact for detailed API documentation.
-        /// </summary>
-        public TelesignResponse Contact(string phoneNumber, string ucid, Dictionary<string, string> parameters = null)
-        {
-            if (parameters == null)
-            {
-                parameters = new Dictionary<string, string>();
-            }
-
-            parameters.Add("ucid", ucid);
-
-            return this.Get(string.Format(PHONEID_CONTACT_RESOURCE, phoneNumber), parameters);
-        }
-
-        /// <summary>
         /// The PhoneID Live API delivers insights such as whether a phone is active or disconnected, a device is reachable
         /// or unreachable and its roaming status.
         ///
@@ -129,21 +113,92 @@ namespace TelesignEnterprise
         }
 
         /// <summary>
-        /// The PhoneID Number Deactivation API determines whether a phone number has been deactivated and when, based on
-        /// carriers' phone number data and TeleSign's proprietary analysis.
-        ///
-        /// See https://developer.telesign.com/docs/rest_api-phoneid-number-deactivation for detailed API documentation.
+        /// Returns detailed information about a phone number, including its carrier, location, and more, by specifying the phone number in the path.
+        /// 
+        /// See https://developer.telesign.com/enterprise/reference/submitphonenumberforidentity for detailed API documentation.  
         /// </summary>
-        public TelesignResponse NumberDeactivation(string phoneNumber, string ucid, Dictionary<string, string> parameters = null)
+        public TelesignResponse PhoneIdPath(string phoneNumber, Dictionary<string, object> parameters = null)
         {
+            if (string.IsNullOrEmpty(phoneNumber))
+                throw new ArgumentNullException(nameof(phoneNumber));
+
             if (parameters == null)
+                parameters = new Dictionary<string, object>();
+
+            if (!parameters.ContainsKey("consent"))
+                parameters["consent"] = new Dictionary<string, int> { { "method", 1 } };
+
+            string resourcePath = string.Format(PHONEID_PATH_RESOURCE, phoneNumber);
+
+            return this.Post(resourcePath, parameters);
+        }
+
+        /// <summary>
+        /// Returns detailed information about a phone number asynchronously, including its carrier, location, and more, by specifying the phone number in the path.
+        /// 
+        /// See https://developer.telesign.com/enterprise/reference/submitphonenumberforidentity for detailed API documentation.  
+        /// </summary>
+        public async Task<TelesignResponse> PhoneIdPathAsync(string phoneNumber, Dictionary<string, object> parameters = null)
+        {
+            if (string.IsNullOrEmpty(phoneNumber))
+                throw new ArgumentNullException(nameof(phoneNumber));
+
+            if (parameters == null)
+                parameters = new Dictionary<string, object>();
+
+            if (!parameters.ContainsKey("consent"))
+                parameters["consent"] = new Dictionary<string, int> { { "method", 1 } };
+
+            string resourcePath = string.Format(PHONEID_PATH_RESOURCE, phoneNumber);
+
+            return await this.PostAsync(resourcePath, parameters).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Returns detailed information about a phone number, including its carrier, location, and more, by providing the phone number in the request body.
+        /// 
+        /// See https://developer.telesign.com/enterprise/reference/submitphonenumberforidentityalt for detailed API documentation.  
+        /// </summary>
+        public TelesignResponse PhoneIdBody(string phoneNumber, Dictionary<string, object> parameters = null)
+        {
+            if (string.IsNullOrEmpty(phoneNumber))
+                throw new ArgumentNullException(nameof(phoneNumber));
+
+            if (parameters == null)
+                parameters = new Dictionary<string, object>();
+
+            parameters["phone_number"] = phoneNumber;
+
+            if (!parameters.ContainsKey("consent"))
             {
-                parameters = new Dictionary<string, string>();
+                parameters["consent"] = new Dictionary<string, int> { { "method", 1 } };
             }
 
-            parameters.Add("ucid", ucid);
+            return this.Post(PHONEID_PAYLOAD_RESOURCE, parameters);
+        }
 
-            return this.Get(string.Format(PHONEID_NUMBER_DEACTIVATION_RESOURCE, phoneNumber), parameters);
+        /// <summary>
+        /// Returns detailed information about a phone number asynchronously, including its carrier, location, and more, by providing the phone number in the request body.
+        /// 
+        /// See https://developer.telesign.com/enterprise/reference/submitphonenumberforidentityalt for detailed API documentation.  
+        /// </summary>
+        public async Task<TelesignResponse> PhoneIdBodyAsync(string phoneNumber, Dictionary<string, object> parameters = null)
+        {
+            if (string.IsNullOrEmpty(phoneNumber))
+                throw new ArgumentNullException(nameof(phoneNumber));
+
+            if (parameters == null)
+                parameters = new Dictionary<string, object>();
+
+            parameters["phone_number"] = phoneNumber;
+
+            if (!parameters.ContainsKey("consent"))
+            {
+                parameters["consent"] = new Dictionary<string, int> { { "method", 1 } };
+            }
+
+            return await this.PostAsync(PHONEID_PAYLOAD_RESOURCE, parameters).ConfigureAwait(false);
         }
     }
 }
