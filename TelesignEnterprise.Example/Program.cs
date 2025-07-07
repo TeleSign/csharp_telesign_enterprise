@@ -41,7 +41,8 @@ switch (options)
     case 2:
         PhoneIdExample phoneIdExample = new(apiKey, customerId, phoneNumber);
         phoneIdExample.CheckPhoneNumberRiskLevel();
-        phoneIdExample.CheckPhoneNumberDeactivated();
+        phoneIdExample.CheckPhoneIdPath();
+        phoneIdExample.CheckPhoneIdBody();
         break;
     case 3:
         VerifyExample verifyExample = new(apiKey, customerId, phoneNumber);
