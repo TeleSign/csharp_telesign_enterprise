@@ -22,7 +22,7 @@ namespace TelesignEnterprise
                 apiKey,
                 "https://rest-ww.telesign.com",
                 "csharp_telesign_enterprise",
-                Assembly.GetAssembly(typeof(_AppVerifyClient)).GetName().Version.ToString(),
+                Assembly.GetAssembly(typeof(AppVerifyClient)).GetName().Version.ToString(),
                 Assembly.GetAssembly(typeof(_AppVerifyClient)).GetName().Version.ToString())
         { }
 
@@ -33,7 +33,7 @@ namespace TelesignEnterprise
                 apiKey,
                 restEndpoint,
                 "csharp_telesign_enterprise",
-                Assembly.GetAssembly(typeof(_AppVerifyClient)).GetName().Version.ToString(),
+                Assembly.GetAssembly(typeof(AppVerifyClient)).GetName().Version.ToString(),
                 Assembly.GetAssembly(typeof(_AppVerifyClient)).GetName().Version.ToString())
         { }
 
@@ -52,7 +52,7 @@ namespace TelesignEnterprise
                 proxyUsername: proxyUsername,
                 proxyPassword: proxyPassword,
                 "csharp_telesign_enterprise",
-                Assembly.GetAssembly(typeof(_AppVerifyClient)).GetName().Version.ToString(),
+                Assembly.GetAssembly(typeof(AppVerifyClient)).GetName().Version.ToString(),
                 Assembly.GetAssembly(typeof(_AppVerifyClient)).GetName().Version.ToString())
         { }
 
