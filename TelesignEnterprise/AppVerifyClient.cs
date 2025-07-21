@@ -3,10 +3,11 @@ using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
 using Telesign;
+using _AppVerifyClient = Telesign.AppVerifyClient;
 
 namespace TelesignEnterprise
 {
-    public class AppVerifyClient : Telesign.AppVerifyClient
+    public class AppVerifyClient : _AppVerifyClient
     {
         private const string APP_VERIFY_BASE_RESOURCE = "/v1/verify/auto/voice";
         private const string INITIATE_RESOURCE = APP_VERIFY_BASE_RESOURCE + "/initiate";
@@ -21,8 +22,8 @@ namespace TelesignEnterprise
                 apiKey,
                 "https://rest-ww.telesign.com",
                 "csharp_telesign_enterprise",
-                Assembly.GetAssembly(typeof(AppVerifyClient)).GetName().Version.ToString(),
-                Assembly.GetAssembly(typeof(Telesign.AppVerifyClient)).GetName().Version.ToString())
+                Assembly.GetAssembly(typeof(_AppVerifyClient)).GetName().Version.ToString(),
+                Assembly.GetAssembly(typeof(_AppVerifyClient)).GetName().Version.ToString())
         { }
 
         public AppVerifyClient(string customerId,
@@ -32,8 +33,8 @@ namespace TelesignEnterprise
                 apiKey,
                 restEndpoint,
                 "csharp_telesign_enterprise",
-                Assembly.GetAssembly(typeof(AppVerifyClient)).GetName().Version.ToString(),
-                Assembly.GetAssembly(typeof(Telesign.AppVerifyClient)).GetName().Version.ToString())
+                Assembly.GetAssembly(typeof(_AppVerifyClient)).GetName().Version.ToString(),
+                Assembly.GetAssembly(typeof(_AppVerifyClient)).GetName().Version.ToString())
         { }
 
         public AppVerifyClient(string customerId,
@@ -51,8 +52,8 @@ namespace TelesignEnterprise
                 proxyUsername: proxyUsername,
                 proxyPassword: proxyPassword,
                 "csharp_telesign_enterprise",
-                Assembly.GetAssembly(typeof(AppVerifyClient)).GetName().Version.ToString(),
-                Assembly.GetAssembly(typeof(Telesign.AppVerifyClient)).GetName().Version.ToString())
+                Assembly.GetAssembly(typeof(_AppVerifyClient)).GetName().Version.ToString(),
+                Assembly.GetAssembly(typeof(_AppVerifyClient)).GetName().Version.ToString())
         { }
 
         /// <summary>
