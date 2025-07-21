@@ -32,7 +32,7 @@ class Program
 
             if (!validOption)
             {
-                Console.WriteLine("Invalid option. Please enter a number between 1 and 8.");
+                Console.WriteLine("Invalid option. Please enter a number between 1 and 8");
                 continue;
             }
 
