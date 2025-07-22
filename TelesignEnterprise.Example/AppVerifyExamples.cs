@@ -10,6 +10,7 @@ namespace TelesignEnterprise.Example
         private readonly string _CustomerId;
         private readonly string _PhoneNumber;
         private readonly AppVerifyClient _appVerifyClient;
+        private string? _storedReferenceId;
 
         public AppVerifyExamples(string customerId, string apiKey, string phoneNumber)
         {
@@ -20,7 +21,7 @@ namespace TelesignEnterprise.Example
         }
 
         /// <summary>
-        /// Initiates the verification call to the phone number.
+        /// Initiates the verification call to the phone number
         /// </summary>
         public void InitiateVerification()
         {
@@ -30,15 +31,28 @@ namespace TelesignEnterprise.Example
                 Telesign.RestClient.TelesignResponse response = _appVerifyClient.Initiate(_PhoneNumber);
                 Console.WriteLine($"Status Code: {response.StatusCode}");
                 Console.WriteLine($"Response Body: {Environment.NewLine + response.Body}");
+                var json = Newtonsoft.Json.Linq.JObject.Parse(response.Body ?? "{}");
+                _storedReferenceId = json["reference_id"]?.ToString();
+
+                if (string.IsNullOrWhiteSpace(_storedReferenceId))
+                {
+                    Console.WriteLine("No reference_id returned in Initiate response.");
+                    _storedReferenceId = null;
+                }
+                else
+                {
+                    Console.WriteLine($"Reference ID saved internally: {_storedReferenceId}");
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Exception during Initiate: {ex.Message}");
+                _storedReferenceId = null;
             }
         }
 
         /// <summary>
-        /// Asynchronously initiates the verification call to the phone number.
+        /// Asynchronously initiates the verification call to the phone number
         /// </summary>
         public async Task InitiateVerificationAsync()
         {
@@ -48,19 +62,42 @@ namespace TelesignEnterprise.Example
                 Telesign.RestClient.TelesignResponse response = await _appVerifyClient.InitiateAsync(_PhoneNumber);
                 Console.WriteLine($"Status Code: {response.StatusCode}");
                 Console.WriteLine($"Response Body: {Environment.NewLine + response.Body}");
+                var json = Newtonsoft.Json.Linq.JObject.Parse(response.Body ?? "{}");
+                _storedReferenceId = json["reference_id"]?.ToString();
+
+                if (string.IsNullOrWhiteSpace(_storedReferenceId))
+                {
+                    Console.WriteLine("No reference_id returned in Initiate response.");
+                    _storedReferenceId = null;
+                }
+                else
+                {
+                    Console.WriteLine($"Reference ID saved internally: {_storedReferenceId}");
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Exception during InitiateAsync: {ex.Message}");
+                _storedReferenceId = null;
             }
         }
 
         /// <summary>
-        /// Finalizes the verification using the reference ID.
+        /// Finalizes the verification using the reference ID
         /// </summary>
         /// <param name="referenceId">Reference ID from initiate response</param>
-        public void FinalizeVerification(string referenceId)
+        public void FinalizeVerification(string? referenceId = null)
         {
+            if (string.IsNullOrWhiteSpace(referenceId))
+            {
+                referenceId = _storedReferenceId;
+                if (string.IsNullOrWhiteSpace(referenceId))
+                {
+                    Console.WriteLine("Reference ID is required but none was provided or stored.");
+                    return;
+                }
+            }
+
             Console.WriteLine("*** Finalize Verification ***");
             try
             {
@@ -75,11 +112,21 @@ namespace TelesignEnterprise.Example
         }
 
         /// <summary>
-        /// Asynchronously finalizes the verification using the reference ID.
+        /// Asynchronously finalizes the verification using the reference ID
         /// </summary>
-        /// <param name="referenceId">Reference ID from initiate response</param>
-        public async Task FinalizeVerificationAsync(string referenceId)
+        /// <param name="referenceId">Reference ID from initiate response (optional)</param>
+        public async Task FinalizeVerificationAsync(string? referenceId = null)
         {
+            if (string.IsNullOrWhiteSpace(referenceId))
+            {
+                referenceId = _storedReferenceId;
+                if (string.IsNullOrWhiteSpace(referenceId))
+                {
+                    Console.WriteLine("Reference ID is required but none was provided or stored.");
+                    return;
+                }
+            }
+
             Console.WriteLine("*** Finalize Verification (Async) ***");
             try
             {
@@ -94,7 +141,7 @@ namespace TelesignEnterprise.Example
         }
 
         /// <summary>
-        /// Reports an unknown caller ID issue.
+        /// Reports an unknown caller ID issue
         /// </summary>
         /// <param name="referenceId">Reference ID from initiate response</param>
         /// <param name="unknownCallerId">Unknown caller ID to report</param>
@@ -138,7 +185,7 @@ namespace TelesignEnterprise.Example
                 }
                 string unknownCallerId = prefix + "99999";//unknown caller ID differing from prefix to simulate mismatch
 
-                Console.WriteLine("*** Report Unknown Caller ID (Test) ***");
+                Console.WriteLine("*** Report Unknown Caller ID Test ***");
                 var unknownResponse = _appVerifyClient.ReportUnknownCallerId(referenceId, unknownCallerId);
                 Console.WriteLine($"Report Unknown Caller ID Status Code: {unknownResponse.StatusCode}");
                 Console.WriteLine($"Report Unknown Caller ID Response Body: {Environment.NewLine + unknownResponse.Body}");
@@ -150,7 +197,7 @@ namespace TelesignEnterprise.Example
         }
 
         /// <summary>
-        /// Asynchronously reports an unknown caller ID issue.
+        /// Asynchronously reports an unknown caller ID issue
         /// </summary>
         /// <param name="referenceId">Reference ID from initiate response</param>
         /// <param name="unknownCallerId">Unknown caller ID to report</param>
@@ -170,7 +217,7 @@ namespace TelesignEnterprise.Example
         }
 
         /// <summary>
-        /// Reports a timeout issue.
+        /// Reports a timeout issue
         /// </summary>
         /// <param name="referenceId">Reference ID from initiate response</param>
         public void ReportTimeout(string referenceId)
@@ -203,7 +250,7 @@ namespace TelesignEnterprise.Example
                     Console.WriteLine("No reference_id returned. Aborting.");
                     return;
                 }
-                Console.WriteLine("*** Report Timeout (Flow Test) ***");
+                Console.WriteLine("*** Report Timeout Test ***");
                 var timeoutResponse = _appVerifyClient.ReportTimeout(referenceId);
                 Console.WriteLine($"Timeout Status Code: {timeoutResponse.StatusCode}");
                 Console.WriteLine($"Timeout Response Body: {Environment.NewLine + timeoutResponse.Body}");
@@ -216,7 +263,7 @@ namespace TelesignEnterprise.Example
 
 
         /// <summary>
-        /// Asynchronously reports a timeout issue.
+        /// Asynchronously reports a timeout issue
         /// </summary>
         /// <param name="referenceId">Reference ID from initiate response</param>
         public async Task ReportTimeoutAsync(string referenceId)
@@ -235,11 +282,21 @@ namespace TelesignEnterprise.Example
         }
 
         /// <summary>
-        /// Gets the transaction status by reference ID.
+        /// Gets the transaction status by reference ID
         /// </summary>
         /// <param name="referenceId">Reference ID from initiate response</param>
-        public void GetTransactionStatus(string referenceId)
+        public void GetTransactionStatus(string? referenceId = null)
         {
+            if (string.IsNullOrWhiteSpace(referenceId))
+            {
+                referenceId = _storedReferenceId;
+                if (string.IsNullOrWhiteSpace(referenceId))
+                {
+                    Console.WriteLine("Reference ID is required but none was provided or stored.");
+                    return;
+                }
+            } 
+
             Console.WriteLine("*** Get Transaction Status ***");
             try
             {
@@ -254,15 +311,25 @@ namespace TelesignEnterprise.Example
         }
 
         /// <summary>
-        /// Asynchronously gets the transaction status by reference ID.
+        /// Asynchronously gets the transaction status by reference ID
         /// </summary>
-        /// <param name="referenceId">Reference ID from initiate response</param>
-        public async Task GetTransactionStatusAsync(string referenceId)
-        {
+        /// <param name="referenceId">Reference ID from initiate response (optional)</param>
+        public async Task GetTransactionStatusAsync(string? referenceId = null)
+        {   
+            if (string.IsNullOrWhiteSpace(referenceId))
+            {
+                referenceId = _storedReferenceId;
+                if (string.IsNullOrWhiteSpace(referenceId))
+                {
+                    Console.WriteLine("Reference ID is required but none was provided or stored.");
+                    return;
+                }
+            }
+
             Console.WriteLine("*** Get Transaction Status (Async) ***");
             try
             {
-                Telesign.RestClient.TelesignResponse response = await _appVerifyClient.GetTransactionStatusAsync(referenceId);
+                RestClient.TelesignResponse response = await _appVerifyClient.GetTransactionStatusAsync(referenceId);
                 Console.WriteLine($"Status Code: {response.StatusCode}");
                 Console.WriteLine($"Response Body: {Environment.NewLine + response.Body}");
             }

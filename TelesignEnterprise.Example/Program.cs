@@ -105,6 +105,16 @@ class Program
         voiceExample.SendVoiceCallFrench();
         voiceExample.SendVoiceCallWithVerificationCode();
     }
+    
+    private static void RunAppVerifyMenu(string customerId, string apiKey, string phoneNumber)
+    {
+        var appVerifyExamples = new AppVerifyExamples(customerId, apiKey, phoneNumber);
+        appVerifyExamples.InitiateVerification();
+        appVerifyExamples.FinalizeVerification();
+        appVerifyExamples.GetTransactionStatus();
+        appVerifyExamples.InitiateAndReportTimeout();
+        appVerifyExamples.InitiateAndReportUnknownCallerId();
+    }
 
     private static void RunOmniVerifyRetrieveExample(string apiKey, string customerId, string phoneNumber)
     {
@@ -137,132 +147,5 @@ class Program
         {
             Console.WriteLine("Reference ID and security code are required. Skipping update.");
         }
-    }
-
-    private static void RunAppVerifyMenu(string customerId, string apiKey, string phoneNumber)
-    {
-        var appVerifyExamples = new AppVerifyExamples(customerId, apiKey, phoneNumber);
-
-        int option = 0;
-        do
-        {
-            Console.WriteLine("\nAppVerify Options:");
-            Console.WriteLine("1. Initiate Verification");
-            Console.WriteLine("2. Finalize Verification");
-            Console.WriteLine("3. Report Unknown Caller ID");
-            Console.WriteLine("4. Initiate+Report Timeout");
-            Console.WriteLine("5. Get Transaction Status");
-            Console.WriteLine("6. Quit to Main Menu");
-            Console.Write("Choose an option (1-6): ");
-
-            var input = Console.ReadLine() ?? string.Empty;
-            if (!int.TryParse(input, out option) || option < 1 || option > 6)
-            {
-                Console.WriteLine("Invalid option. Please enter a number between 1 and 6");
-                continue;
-            }
-
-            switch (option)
-            {
-                case 1:
-                    InitiateVerification(appVerifyExamples);
-                    break;
-                case 2:
-                    FinalizeVerification(appVerifyExamples);
-                    break;
-                case 3:
-                    InitiateAndReportUnknownCallerId(appVerifyExamples);
-                    break;
-                case 4:
-                    InitiateAndReportTimeout(appVerifyExamples);
-                    break;
-                case 5:
-                    GetTransactionStatus(appVerifyExamples);
-                    break;
-                case 6:
-                    Console.WriteLine("Returning to main menu...");
-                    break;
-            }
-
-        } while (option != 6);
-    }
-
-    private static void InitiateVerification(AppVerifyExamples appVerifyExamples)
-    {
-        try
-        {
-            appVerifyExamples.InitiateVerification();
-        }
-        catch(Exception ex)
-        {
-            Console.WriteLine($"Error Initiating Verification: {ex.Message}");
-        }
-    }
-
-    private static void ReportUnknownCallerId(AppVerifyExamples appVerifyExamples)
-    {
-        Console.Write("Enter Reference ID: ");
-        var refId = Console.ReadLine();
-        Console.Write("Enter Unknown Caller ID: ");
-        var unknownCallerId = Console.ReadLine();
-        
-        if (string.IsNullOrWhiteSpace(refId) || string.IsNullOrWhiteSpace(unknownCallerId))
-        {
-            Console.WriteLine("Reference ID and Unknown Caller ID are required.");
-            return;
-        }
-
-        appVerifyExamples.ReportUnknownCallerId(refId.Trim(), unknownCallerId.Trim());
-    }
-
-    private static void FinalizeVerification(AppVerifyExamples appVerifyExamples)
-    {
-        Console.Write("Enter Reference ID: ");
-        var refId = Console.ReadLine();
-
-        if (string.IsNullOrWhiteSpace(refId))
-        {
-            Console.WriteLine("Reference ID is required.");
-            return;
-        }
-
-        appVerifyExamples.FinalizeVerification(refId.Trim());
-    }
-
-    private static void ReportTimeout(AppVerifyExamples appVerifyExamples)
-    {
-        Console.Write("Enter Reference ID: ");
-        var refId = Console.ReadLine();
-
-        if (string.IsNullOrWhiteSpace(refId))
-        {
-            Console.WriteLine("Reference ID is required.");
-            return;
-        }
-
-        appVerifyExamples.ReportTimeout(refId.Trim());
-    }
-
-    private static void GetTransactionStatus(AppVerifyExamples appVerifyExamples)
-    {
-        Console.Write("Enter Reference ID: ");
-        var refId = Console.ReadLine();
-
-        if (string.IsNullOrWhiteSpace(refId))
-        {
-            Console.WriteLine("Reference ID is required.");
-            return;
-        }
-
-        appVerifyExamples.GetTransactionStatus(refId.Trim());
-    }
-
-    private static void InitiateAndReportTimeout(AppVerifyExamples appVerifyExamples)
-    {
-        appVerifyExamples.InitiateAndReportTimeout();
-    }
-    private static void InitiateAndReportUnknownCallerId(AppVerifyExamples appVerifyExamples)
-    {
-        appVerifyExamples.InitiateAndReportUnknownCallerId();
     }
 }
