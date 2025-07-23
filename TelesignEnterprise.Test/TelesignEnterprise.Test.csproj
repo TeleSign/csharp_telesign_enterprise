@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TelesignEnterprise\TelesignEnterprise.csproj" />
-    <PackageReference Include="Telesign" Version="2.6.0" />
+    <PackageReference Include="Telesign" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,4 +17,5 @@
     <PackageReference Include="RichardSzalay.MockHttp" Version="7.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
+  
 </Project>
