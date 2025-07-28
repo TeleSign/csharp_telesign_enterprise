@@ -1,3 +1,10 @@
+2.9.0
+- Added full support for the App Verify API to the C# FS SDK, including:
+    - Initiating a call to deliver a verification code
+    - Finalizing the call by submitting the code
+    - Reporting unknown caller ID issues and timeout events
+    - Retrieving transaction status
+
 2.8.0
 - Added C# SDK methods for full support of the latest Phone ID product.
   These methods retrieve phone number information via POST requests.The phone number can be provided 
