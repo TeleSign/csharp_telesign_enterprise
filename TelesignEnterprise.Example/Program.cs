@@ -24,15 +24,16 @@ class Program
             Console.WriteLine("5. Execute OmniVerify examples Retrieve");
             Console.WriteLine("6. Execute OmniVerify examples Update");
             Console.WriteLine("7. Execute AppVerify examples");
-            Console.WriteLine("8. Quit");
-            Console.Write("Enter your choice (1-8): ");
+            Console.WriteLine("8. Execute ScoreClient examples");
+            Console.WriteLine("9. Quit");
+            Console.Write("Enter your choice (1-9): ");
 
             var input = Console.ReadLine() ?? string.Empty;
-            validOption = int.TryParse(input, out option) && option >= 1 && option <= 8;
+            validOption = int.TryParse(input, out option) && option >= 1 && option <= 9;
 
             if (!validOption)
             {
-                Console.WriteLine("Invalid option. Please enter a number between 1 and 8");
+                Console.WriteLine("Invalid option. Please enter a number between 1 and 9");
                 continue;
             }
 
@@ -60,11 +61,14 @@ class Program
                     RunAppVerifyMenu(customerId, apiKey, phoneNumber);
                     break;
                 case 8:
+                    RunScoreClientExample(apiKey, customerId, phoneNumber);
+                    break;
+                case 9:
                     Console.WriteLine("Bye! :)");
                     break;
             }
 
-        } while (option != 8);
+        } while (option != 9);
     }
 
     private static void RunMessagingExamples(string apiKey, string customerId, string phoneNumber)
@@ -80,7 +84,6 @@ class Program
     private static void RunPhoneIdExamples(string apiKey, string customerId, string phoneNumber)
     {
         var phoneIdExample = new PhoneIdExample(apiKey, customerId, phoneNumber);
-        phoneIdExample.CheckPhoneNumberRiskLevel();
         phoneIdExample.CheckPhoneIdPath();
         phoneIdExample.CheckPhoneIdBody();
     }
@@ -147,5 +150,11 @@ class Program
         {
             Console.WriteLine("Reference ID and security code are required. Skipping update.");
         }
+    }
+
+    private static void RunScoreClientExample(string apiKey, string customerId, string phoneNumber)
+    {
+        var scoreExample = new ScoreExample(apiKey, customerId, phoneNumber);
+        scoreExample.CheckPhoneNumberRiskLevel();
     }
 }

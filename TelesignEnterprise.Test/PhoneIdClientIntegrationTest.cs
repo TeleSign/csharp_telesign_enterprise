@@ -8,12 +8,12 @@ using Newtonsoft.Json.Linq;
 namespace TelesignEnterprise.Tests
 {
     [TestFixture]
-    [Category("Unit")]
-    public class PhoneIdClientTests
+    [Category("Integration")]
+    public class PhoneIdClientIntegrationTest
     {
-        private readonly string _customerId = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890";
-        private readonly string _apiKey = "ABC12345yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw==";
-        private readonly string _testPhoneNumber = "+11234567890";  
+        private readonly string _customerId = Environment.GetEnvironmentVariable("CUSTOMER_ID")?? "FFFFFFFF-EEEE-DDDD-1234-AB1234567890";
+        private readonly string _apiKey = Environment.GetEnvironmentVariable("API_KEY") ?? "ABC12345yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw==";
+        private readonly string _testPhoneNumber = Environment.GetEnvironmentVariable("PHONE_NUMBER") ?? "+11234567890";
 
         private PhoneIdClient CreateClient() =>
             new PhoneIdClient(_customerId, _apiKey);
@@ -27,7 +27,7 @@ namespace TelesignEnterprise.Tests
             {
                 { "consent", new Dictionary<string, int> { { "method", 1 } } },
                 { "account_lifecycle_event", "sign-in" },
-                { "external_id", "unit_test" },
+                { "external_id", "test" },
                 { "originating_ip", "203.0.113.42" }
             };
 
@@ -57,7 +57,7 @@ namespace TelesignEnterprise.Tests
             {
                 { "consent", new Dictionary<string, int> { { "method", 1 } } },
                 { "account_lifecycle_event", "sign-in" },
-                { "external_id", "unit_test" },
+                { "external_id", "test" },
                 { "originating_ip", "203.0.113.42" }
             };
 
