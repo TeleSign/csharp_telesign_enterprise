@@ -10,7 +10,7 @@ namespace TelesignEnterprise
             string apiKey)
             : base(customerId,
                 apiKey,
-                "https://rest-ww.telesign.com",
+                "https://detect.telesign.com",
                 "csharp_telesign_enterprise",
                 Assembly.GetAssembly(typeof(ScoreClient)).GetName().Version.ToString(),
                 Assembly.GetAssembly(typeof(_ScoreClient)).GetName().Version.ToString())

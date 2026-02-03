@@ -18,7 +18,6 @@ namespace TelesignEnterprise
     public class PhoneIdClient : _PhoneIdClient
     {
         private const string PHONEID_STANDARD_RESOURCE = "/v1/phoneid/standard/{0}";
-        private const string PHONEID_SCORE_RESOURCE = "/v1/phoneid/score/{0}";
         private const string PHONEID_LIVE_RESOURCE = "/v1/phoneid/live/{0}";
         private const string PHONEID_PATH_RESOURCE = "/v1/phoneid/{0}";
         private const string PHONEID_PAYLOAD_RESOURCE = "/v1/phoneid";
@@ -74,25 +73,7 @@ namespace TelesignEnterprise
         public TelesignResponse Standard(string phoneNumber, Dictionary<string, string> parameters = null)
         {
             return this.Get(string.Format(PHONEID_STANDARD_RESOURCE, phoneNumber), parameters);
-        }
-
-        /// <summary>
-        /// Score is an API that delivers reputation scoring based on phone number intelligence, traffic patterns, machine
-        /// learning, and a global data consortium.
-        ///
-        /// See https://developer.telesign.com/docs/rest_api-phoneid-score for detailed API documentation.
-        /// </summary>
-        public TelesignResponse Score(string phoneNumber, string ucid, Dictionary<string, string> parameters = null)
-        {
-            if (parameters == null)
-            {
-                parameters = new Dictionary<string, string>();
-            }
-
-            parameters.Add("ucid", ucid);
-
-            return this.Get(string.Format(PHONEID_SCORE_RESOURCE, phoneNumber), parameters);
-        }
+        } 
 
         /// <summary>
         /// The PhoneID Live API delivers insights such as whether a phone is active or disconnected, a device is reachable

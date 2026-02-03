@@ -1,3 +1,7 @@
+3.0.0
+- Added support for Intelligence Cloud to use the new endpoint
+- Removed Legacy PID Score
+
 2.9.0
 - Added full support for the App Verify API to the C# FS SDK, including:
     - Initiating a call to deliver a verification code

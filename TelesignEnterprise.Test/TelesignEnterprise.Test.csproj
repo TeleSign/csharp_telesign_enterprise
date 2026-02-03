@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TelesignEnterprise\TelesignEnterprise.csproj" />
-    <PackageReference Include="Telesign" Version="3.0.0" />
+    <PackageReference Include="Telesign" Version="4.0.0" />
   </ItemGroup>
 
   <ItemGroup>

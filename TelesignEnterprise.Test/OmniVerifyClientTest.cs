@@ -13,10 +13,10 @@ namespace TelesignEnterprise.Tests.Unit
 {
     [TestFixture]
     [Category("Unit")] 
-    public class OmniVerifyClientTests
+    public class OmniVerifyClientTest
     {
-        private const string TestCustomerId = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890";
-        private const string TestApiKey = "ABC12345yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="; //API key to a base64 string
+        private readonly string TestCustomerId = Environment.GetEnvironmentVariable("CUSTOMER_ID")?? "FFFFFFFF-EEEE-DDDD-1234-AB1234567890";
+        private readonly string TestApiKey = Environment.GetEnvironmentVariable("API_KEY") ?? "ABC12345yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw==";
         private const string TestVerificationId = "123456";
         private const string BaseUrl = "https://verify.telesign.com";
         private MockHttpMessageHandler _mockHttp;

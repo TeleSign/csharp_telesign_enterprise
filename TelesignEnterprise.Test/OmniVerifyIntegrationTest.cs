@@ -9,10 +9,10 @@ namespace TelesignEnterprise.Tests.Integration
 {
     [TestFixture]
     [Category("Integration")] 
-    public class OmniVerifyClientIntegrationTests
+    public class OmniVerifyClientIntegrationTest
     {
-        private const string RealCustomerId = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890";
-        private const string RealApiKey = "ABC12345yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw==";
+        private readonly string RealCustomerId = Environment.GetEnvironmentVariable("CUSTOMER_ID")?? "FFFFFFFF-EEEE-DDDD-1234-AB1234567890";
+        private readonly string RealApiKey = Environment.GetEnvironmentVariable("API_KEY") ?? "ABC12345yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw==";
 
         private OmniVerifyClient _client;
 

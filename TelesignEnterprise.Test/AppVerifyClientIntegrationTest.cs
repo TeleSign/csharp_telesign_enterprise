@@ -8,12 +8,12 @@ using TelesignEnterprise;
 namespace TelesignEnterprise.Tests
 {
     [TestFixture]
-    [Category("Unit")]
-    public class AppVerifyClientTest
+    [Category("Integration")]
+    public class AppVerifyClientIntegrationTest
     {
-        private readonly string _customerId = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890";
-        private readonly string _apiKey = "ABC12345yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw==";
-        private readonly string _testPhoneNumber = "+11234567890";
+        private readonly string _customerId = Environment.GetEnvironmentVariable("CUSTOMER_ID")?? "FFFFFFFF-EEEE-DDDD-1234-AB1234567890";
+        private readonly string _apiKey = Environment.GetEnvironmentVariable("API_KEY") ?? "ABC12345yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw==";
+        private readonly string _testPhoneNumber = Environment.GetEnvironmentVariable("PHONE_NUMBER") ?? "+11234567890";
 
         private AppVerifyClient CreateClient() =>
             new AppVerifyClient(_customerId, _apiKey);
