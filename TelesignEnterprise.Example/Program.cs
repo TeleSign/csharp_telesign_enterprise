@@ -79,6 +79,10 @@ class Program
         messagingExample.SendOmniMessageRcsChannel();
         messagingExample.SendOmniMessageSmsChannel();
         messagingExample.SendOmniMessageSmsRcsWithParams();
+        messagingExample.CheckChannelCapability();
+        messagingExample.CheckRbmCapability();
+        messagingExample.GetMessagingStatus();
+        messagingExample.ManageTemplates();
     }
 
     private static void RunPhoneIdExamples(string apiKey, string customerId, string phoneNumber)

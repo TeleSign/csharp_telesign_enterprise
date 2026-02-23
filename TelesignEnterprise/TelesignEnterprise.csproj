@@ -16,7 +16,7 @@
             For full release notes see https://github.com/TeleSign/csharp_telesign_enterprise/blob/master/RELEASE.md
             ]]></PackageReleaseNotes>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-	<Version>3.0.0</Version>
+	<Version>3.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -35,7 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="Telesign" Version="4.0.0" />
   </ItemGroup>
   

@@ -1,3 +1,6 @@
+3.1.0
+- Added remaining Messsaging actions
+
 3.0.0
 - Added support for Intelligence Cloud to use the new endpoint
 - Removed Legacy PID Score
