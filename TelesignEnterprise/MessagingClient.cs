@@ -124,7 +124,8 @@ namespace TelesignEnterprise
         /// <param name="parameters">Optional parameters (e.g., verify_code)</param>
         public TelesignResponse GetMessagingStatus(string referenceId, Dictionary<string, string> parameters = null)
         {
-            parameters ??= new Dictionary<string, string>();
+            if (parameters == null)
+                parameters = new Dictionary<string, string>();
             string resource = $"{OMNI_MESSAGING_RESOURCE}/{referenceId}";
             return Get(resource, parameters);
         }
@@ -135,7 +136,8 @@ namespace TelesignEnterprise
         /// </summary>
         public Task<TelesignResponse> GetMessagingStatusAsync(string referenceId, Dictionary<string, string> parameters = null)
         {
-            parameters ??= new Dictionary<string, string>();
+            if (parameters == null)
+                parameters = new Dictionary<string, string>();
             string resource = $"{OMNI_MESSAGING_RESOURCE}/{referenceId}";
             return GetAsync(resource, parameters);
         }
