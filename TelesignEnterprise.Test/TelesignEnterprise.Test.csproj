@@ -7,9 +7,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TelesignEnterprise\TelesignEnterprise.csproj" />
-    <PackageReference Include="Telesign" Version="4.0.0" />
+    <PackageReference Include="Telesign" Version="4.1.0" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="NUnit" Version="3.13.3" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.3.1" />
