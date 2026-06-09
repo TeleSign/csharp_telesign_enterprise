@@ -1,3 +1,6 @@
+3.2.0
+- Added support for Email Intelligence.
+
 3.1.0
 - Added remaining Messsaging actions
 

@@ -10,6 +10,7 @@ class Program
         string customerId = Environment.GetEnvironmentVariable("CUSTOMER_ID") ?? "FFFFFFFF-EEEE-DDDD-1234-AB1234567890";
         string apiKey = Environment.GetEnvironmentVariable("API_KEY") ?? "ABC12345yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw==";
         string phoneNumber = Environment.GetEnvironmentVariable("PHONE_NUMBER") ?? "11234567890";
+        string emailAddress = Environment.GetEnvironmentVariable("EMAIL_ADDRESS") ?? "user@example.com";
 
         int option = -1;
         bool validOption;
@@ -61,7 +62,7 @@ class Program
                     RunAppVerifyMenu(customerId, apiKey, phoneNumber);
                     break;
                 case 8:
-                    RunScoreClientExample(apiKey, customerId, phoneNumber);
+                    RunScoreClientExample(apiKey, customerId, phoneNumber, emailAddress);
                     break;
                 case 9:
                     Console.WriteLine("Bye! :)");
@@ -156,9 +157,11 @@ class Program
         }
     }
 
-    private static void RunScoreClientExample(string apiKey, string customerId, string phoneNumber)
+    private static void RunScoreClientExample(string apiKey, string customerId, string phoneNumber, string emailAddress)
     {
-        var scoreExample = new ScoreExample(apiKey, customerId, phoneNumber);
+        Console.WriteLine("*** Running Score examples ***");
+        var scoreExample = new ScoreExample(apiKey, customerId, phoneNumber, emailAddress);
         scoreExample.CheckPhoneNumberRiskLevel();
+        scoreExample.CheckEmailAddressRiskLevel();
     }
 }
