@@ -1,3 +1,6 @@
+3.2.1
+- Added dependency tests
+
 3.2.0
 - Added support for Email Intelligence.
 

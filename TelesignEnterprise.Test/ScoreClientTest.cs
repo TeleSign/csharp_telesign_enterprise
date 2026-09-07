@@ -74,6 +74,19 @@ namespace TelesignEnterprise.Test
         }
 
         [Test]
+        public void TestExposesDependencyMethods()
+        {
+            DependencyCheckHelper.VerifyDependencyMethods(
+                typeof(ScoreClient),
+                typeof(Telesign.ScoreClient),
+                "Score",
+                "ScoreAsync",
+                "EmailIntelligence",
+                "EmailIntelligenceAsync"
+            );
+        }
+
+        [Test]
         public void TestScoreClientScore()
         {
             var client = CreateClient();
