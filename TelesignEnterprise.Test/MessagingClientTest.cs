@@ -97,23 +97,23 @@ namespace TelesignEnterprise.Test
         {
             var httpClient = mockHttp.ToHttpClient();
             httpClient.BaseAddress = new Uri("http://localhost");
-    
+
             var client = new MessagingClient(customerId, apiKey, "http://localhost", 10000, null, null, null);
-    
-            try 
+
+            try
             {
                 var httpClientField = typeof(Telesign.RestClient)
-                    .GetField("_httpClient", BindingFlags.NonPublic | BindingFlags.Instance) 
+                    .GetField("_httpClient", BindingFlags.NonPublic | BindingFlags.Instance)
                     ?? typeof(Telesign.RestClient)
                     .GetField("httpClient", BindingFlags.NonPublic | BindingFlags.Instance);
-        
+
                 httpClientField?.SetValue(client, httpClient);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Reflection failed: {ex.Message}");
             }
-    
+
             return client;
         }
 
@@ -128,6 +128,19 @@ namespace TelesignEnterprise.Test
             var client2 = new MessagingClient(customerId, apiKey, "https://test.telesign.com");
             Assert.IsNotNull(client2);
             Console.WriteLine("     TestMessagingClientConstructors Test PASSED");
+        }
+
+        [Test]
+        public void TestExposesDependencyMethods()
+        {
+            Console.WriteLine("Running TestExposesDependencyMethods...");
+            DependencyCheckHelper.VerifyDependencyMethods(
+                typeof(MessagingClient),
+                typeof(Telesign.MessagingClient),
+                "Message",
+                "MessageAsync"
+            );
+            Console.WriteLine("     TestExposesDependencyMethods Test PASSED");
         }
 
         [Test]
@@ -214,27 +227,27 @@ namespace TelesignEnterprise.Test
             Assert.AreEqual("/v1/omnichannel/test_ref123", lastRequest.RequestUri.AbsolutePath);
             Console.WriteLine("     TestGetMessagingStatus Test PASSED");
         }
-    
+
         [Test]
         public void TestTemplateManagement()
         {
             var client = CreateClient();
-    
+
             Console.WriteLine("Starting template tests....");
-    
+
             try
             {
                 Console.WriteLine("Running GetAllMsgTemplates()");
                 var getAllResponse = client.GetAllMsgTemplates();
                 Console.WriteLine($"   Get all messaging template status: {getAllResponse.StatusCode}");
-                
+
                 Console.WriteLine("Running CreateMsgTemplate()");
-                var createParams = new Dictionary<string, object> 
-                { 
-                    {"name", "test_template"}, 
-                    {"type", "standard"}, 
+                var createParams = new Dictionary<string, object>
+                {
+                    {"name", "test_template"},
+                    {"type", "standard"},
                     {"channel", "sms"},
-                    { 
+                    {
                         "content", new List<Dictionary<string, object>>
                         {
                             new Dictionary<string, object>
@@ -252,7 +265,7 @@ namespace TelesignEnterprise.Test
 
                 var createResponse = client.CreateMsgTemplate(createParams);
                 Console.WriteLine($"   Create status: {createResponse.StatusCode}");
-                
+
                 Console.WriteLine("Running GetMsgTemplate()");
                 var getResponse = client.GetMsgTemplate("sms", "test_template");
                 Console.WriteLine($"   Get messaging status: {getResponse.StatusCode}");
@@ -265,14 +278,14 @@ namespace TelesignEnterprise.Test
                 Assert.That(createResponse.StatusCode, Is.EqualTo(200).Or.EqualTo(201), "CreateMsgTemplate failed");
                 Assert.That(getResponse.StatusCode, Is.EqualTo(200), "GetMsgTemplate failed");
                 Assert.That(deleteResponse.StatusCode, Is.EqualTo(200), "DeleteMsgTemplate failed");
-        
+
                 Console.WriteLine("All TemplateManagement Tests PASSED");
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"EXCEPTION: {ex.Message}");
                 Console.WriteLine($"Stack: {ex.StackTrace}");
-                throw; 
+                throw;
             }
         }
     }
